@@ -41,6 +41,9 @@ from tfx.extensions.google_cloud_ai_platform.pusher import executor as ai_platfo
 from tfx.utils.dsl_utils import external_input
 from typing import Dict, List, Text
 
+from use_mysql_secret import use_mysql_secret
+from kfp import gcp
+
 def _create_pipeline(
     pipeline_name: Text, 
     pipeline_root: Text, 
@@ -165,13 +168,16 @@ if __name__ == '__main__':
   _metadata_config.mysql_db_service_host.environment_variable = 'MYSQL_SERVICE_HOST'
   _metadata_config.mysql_db_service_port.environment_variable = 'MYSQL_SERVICE_PORT'
   _metadata_config.mysql_db_name.value = 'metadb'
-  _metadata_config.mysql_db_user.value = 'root' 
-  _metadata_config.mysql_db_password.value = ''
+  _metadata_config.mysql_db_user.environment_variable = 'MYSQL_USERNAME' 
+  _metadata_config.mysql_db_password.environment_variable = 'MYSQL_PASSWORD'
 
+
+  operator_funcs = [gcp.use_gcp_secret('user-gcp-sa'), use_mysql_secret('mysql-credential')]
 
   # Compile the pipeline
   runner_config = kubeflow_dag_runner.KubeflowDagRunnerConfig(
       kubeflow_metadata_config=_metadata_config,
+      pipeline_operator_funcs=operator_funcs,
       tfx_image=_pipeline_image
   )
 
