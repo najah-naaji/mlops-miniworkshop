@@ -5,8 +5,8 @@ metadata:
     pipelines.kubeflow.org/pipeline_spec: '{"description": "CLV Training Pipeline
       using BigQuery for feature engineering and Automl Tables for model training",
       "inputs": [{"name": "project_id"}, {"default": "WITH\n  order_summaries as (\n    SELECT\n      a.customer_id,\n      a.order_date,\n      a.order_value,\n      a.order_qty_articles\n    FROM\n    (\n      SELECT\n        customer_id,\n        order_date,\n        ROUND(SUM(unit_price
-      * quantity), 2) AS order_value,\n        SUM(quantity) AS order_qty_articles,\n        (\n          SELECT\n            MAX(order_date)\n          FROM\n            `jk-caip.lab_201.transactions`
-      tl\n          WHERE\n            tl.customer_id = t.customer_id\n        ) latest_order\n      FROM\n        `jk-caip.lab_201.transactions`
+      * quantity), 2) AS order_value,\n        SUM(quantity) AS order_qty_articles,\n        (\n          SELECT\n            MAX(order_date)\n          FROM\n            `jk-mlops-demo.clv_dataset.transactions`
+      tl\n          WHERE\n            tl.customer_id = t.customer_id\n        ) latest_order\n      FROM\n        `jk-mlops-demo.clv_dataset.transactions`
       t\n      GROUP BY\n          customer_id,\n          order_date\n    ) a\n\n    INNER
       JOIN (\n      -- Only customers with more than one positive order values before
       threshold.\n      SELECT\n        customer_id\n      FROM (\n        -- Customers
@@ -14,7 +14,7 @@ metadata:
       cnt_positive_value\n        FROM (\n          -- Customer with whether order
       was positive or not at each date.\n          SELECT\n            customer_id,\n            (\n              CASE\n                WHEN
       SUM(unit_price * quantity) > 0 THEN 1\n                ELSE 0\n              END
-      ) positive_value\n          FROM\n            `jk-caip.lab_201.transactions`\n          WHERE\n            order_date
+      ) positive_value\n          FROM\n            `jk-mlops-demo.clv_dataset.transactions`\n          WHERE\n            order_date
       < DATE(\"2011-08-08\")\n          GROUP BY\n            customer_id,\n            order_date)\n        GROUP
       BY\n          customer_id )\n      WHERE\n        cnt_positive_value > 1\n      )
       b\n    ON\n      a.customer_id = b.customer_id\n    --[START common_clean]\n    WHERE\n      --
@@ -37,7 +37,7 @@ metadata:
       BY\n      customer_id) tt\nWHERE\n  tf.customer_id = tt.customer_id\n  AND tf.monetary
       > 0\n  AND tf.monetary <= 15000", "name": "feature_engineering_query"}, {"default":
       "us-central1", "name": "aml_compute_region"}, {"default": "features", "name":
-      "features_table_id"}, {"default": "lab_201", "name": "features_dataset_id"},
+      "features_table_id"}, {"default": "clv_dataset", "name": "features_dataset_id"},
       {"default": "US", "name": "features_dataset_location"}, {"default": "clv_features",
       "name": "aml_dataset_name"}, {"default": "target_monetary", "name": "target_column_name"},
       {"default": "clv_regression", "name": "aml_model_name"}, {"default": "1000",
@@ -56,32 +56,33 @@ spec:
         \    (\n      SELECT\n        customer_id,\n        order_date,\n        ROUND(SUM(unit_price\
         \ * quantity), 2) AS order_value,\n        SUM(quantity) AS order_qty_articles,\n\
         \        (\n          SELECT\n            MAX(order_date)\n          FROM\n\
-        \            `jk-caip.lab_201.transactions` tl\n          WHERE\n        \
-        \    tl.customer_id = t.customer_id\n        ) latest_order\n      FROM\n\
-        \        `jk-caip.lab_201.transactions` t\n      GROUP BY\n          customer_id,\n\
-        \          order_date\n    ) a\n\n    INNER JOIN (\n      -- Only customers\
-        \ with more than one positive order values before threshold.\n      SELECT\n\
-        \        customer_id\n      FROM (\n        -- Customers and how many positive\
-        \ order values  before threshold.\n        SELECT\n          customer_id,\n\
-        \          SUM(positive_value) cnt_positive_value\n        FROM (\n      \
-        \    -- Customer with whether order was positive or not at each date.\n  \
-        \        SELECT\n            customer_id,\n            (\n              CASE\n\
-        \                WHEN SUM(unit_price * quantity) > 0 THEN 1\n            \
-        \    ELSE 0\n              END ) positive_value\n          FROM\n        \
-        \    `jk-caip.lab_201.transactions`\n          WHERE\n            order_date\
-        \ < DATE(\"2011-08-08\")\n          GROUP BY\n            customer_id,\n \
-        \           order_date)\n        GROUP BY\n          customer_id )\n     \
-        \ WHERE\n        cnt_positive_value > 1\n      ) b\n    ON\n      a.customer_id\
-        \ = b.customer_id\n    --[START common_clean]\n    WHERE\n      -- Bought\
-        \ in the past 3 months\n      DATE_DIFF(DATE(\"2011-12-12\"), latest_order,\
-        \ DAY) <= 90\n      -- Make sure returns are consistent.\n      AND (\n  \
-        \      (order_qty_articles > 0 and order_Value > 0) OR\n        (order_qty_articles\
-        \ < 0 and order_Value < 0)\n      ))\n          \nSELECT\n--  tf.customer_id,\n\
-        \  ROUND(tf.monetary, 2) as monetary,\n  tf.cnt_orders AS frequency,\n  tf.recency,\n\
-        \  tf.T,\n  ROUND(tf.recency/cnt_orders, 2) AS time_between,\n  ROUND(tf.avg_basket_value,\
-        \ 2) AS avg_basket_value,\n  ROUND(tf.avg_basket_size, 2) AS avg_basket_size,\n\
-        \  tf.cnt_returns,\n  -- Target calculated for overall period\n  ROUND(tt.target_monetary,\
-        \ 2) as target_monetary\nFROM\n  -- This SELECT uses only data before threshold\
+        \            `jk-mlops-demo.clv_dataset.transactions` tl\n          WHERE\n\
+        \            tl.customer_id = t.customer_id\n        ) latest_order\n    \
+        \  FROM\n        `jk-mlops-demo.clv_dataset.transactions` t\n      GROUP BY\n\
+        \          customer_id,\n          order_date\n    ) a\n\n    INNER JOIN (\n\
+        \      -- Only customers with more than one positive order values before threshold.\n\
+        \      SELECT\n        customer_id\n      FROM (\n        -- Customers and\
+        \ how many positive order values  before threshold.\n        SELECT\n    \
+        \      customer_id,\n          SUM(positive_value) cnt_positive_value\n  \
+        \      FROM (\n          -- Customer with whether order was positive or not\
+        \ at each date.\n          SELECT\n            customer_id,\n            (\n\
+        \              CASE\n                WHEN SUM(unit_price * quantity) > 0 THEN\
+        \ 1\n                ELSE 0\n              END ) positive_value\n        \
+        \  FROM\n            `jk-mlops-demo.clv_dataset.transactions`\n          WHERE\n\
+        \            order_date < DATE(\"2011-08-08\")\n          GROUP BY\n     \
+        \       customer_id,\n            order_date)\n        GROUP BY\n        \
+        \  customer_id )\n      WHERE\n        cnt_positive_value > 1\n      ) b\n\
+        \    ON\n      a.customer_id = b.customer_id\n    --[START common_clean]\n\
+        \    WHERE\n      -- Bought in the past 3 months\n      DATE_DIFF(DATE(\"\
+        2011-12-12\"), latest_order, DAY) <= 90\n      -- Make sure returns are consistent.\n\
+        \      AND (\n        (order_qty_articles > 0 and order_Value > 0) OR\n  \
+        \      (order_qty_articles < 0 and order_Value < 0)\n      ))\n          \n\
+        SELECT\n--  tf.customer_id,\n  ROUND(tf.monetary, 2) as monetary,\n  tf.cnt_orders\
+        \ AS frequency,\n  tf.recency,\n  tf.T,\n  ROUND(tf.recency/cnt_orders, 2)\
+        \ AS time_between,\n  ROUND(tf.avg_basket_value, 2) AS avg_basket_value,\n\
+        \  ROUND(tf.avg_basket_size, 2) AS avg_basket_size,\n  tf.cnt_returns,\n \
+        \ -- Target calculated for overall period\n  ROUND(tt.target_monetary, 2)\
+        \ as target_monetary\nFROM\n  -- This SELECT uses only data before threshold\
         \ to make features.\n  (\n    SELECT\n      customer_id,\n      SUM(order_value)\
         \ AS monetary,\n      DATE_DIFF(MAX(order_date), MIN(order_date), DAY) AS\
         \ recency,\n      DATE_DIFF(DATE('2011-08-08'), MIN(order_date), DAY) AS T,\n\
@@ -100,7 +101,7 @@ spec:
     - name: features-table-id
       value: features
     - name: features-dataset-id
-      value: lab_201
+      value: clv_dataset
     - name: features-dataset-location
       value: US
     - name: aml-dataset-name
@@ -364,7 +365,7 @@ spec:
         value: /secret/gcp-credentials/user-gcp-sa.json
       - name: CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
         value: /secret/gcp-credentials/user-gcp-sa.json
-      image: gcr.io/jk-caip/lab_301_components:latest
+      image: gcr.io/jk-mlops-demo/custom_components:latest
       volumeMounts:
       - mountPath: /secret/gcp-credentials
         name: gcp-credentials-user-gcp-sa
@@ -505,7 +506,7 @@ spec:
         value: /secret/gcp-credentials/user-gcp-sa.json
       - name: CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
         value: /secret/gcp-credentials/user-gcp-sa.json
-      image: gcr.io/jk-caip/lab_301_components:latest
+      image: gcr.io/jk-mlops-demo/custom_components:latest
       volumeMounts:
       - mountPath: /secret/gcp-credentials
         name: gcp-credentials-user-gcp-sa
@@ -679,7 +680,7 @@ spec:
         value: /secret/gcp-credentials/user-gcp-sa.json
       - name: CLOUDSDK_AUTH_CREDENTIAL_FILE_OVERRIDE
         value: /secret/gcp-credentials/user-gcp-sa.json
-      image: gcr.io/jk-caip/lab_301_components:latest
+      image: gcr.io/jk-mlops-demo/custom_components:latest
       volumeMounts:
       - mountPath: /secret/gcp-credentials
         name: gcp-credentials-user-gcp-sa
