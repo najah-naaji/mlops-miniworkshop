@@ -30,7 +30,7 @@ steps:
   args: ['container', 'clusters', 'get-credentials', '$_CLUSTER_NAME', '--zone', '$_ZONE']
   
 - name: 'gcr.io/$PROJECT_ID/tfx-cli'
-  args: ['pipeline', 'create', '--pipeline_path', '$_PIPELINE_DSL']
+  args: ['pipeline', 'create', '--engine', 'kubeflow', '--pipeline_path', '$_PIPELINE_DSL']
   env: 
   - 'PIPELINE_IMAGE=gcr.io/$PROJECT_ID/$_PIPELINE_IMAGE:$TAG_NAME'
   - 'PROJECT_ID=$PROJECT_ID'
