@@ -6,3 +6,5 @@ visualize your dataset. That includes looking at descriptive statistics, inferri
  characteristics, including how it might change over time in your production pipeline. It's also important to look for
  anomalies in your data, and to compare your training, evaluation, and serving datasets to make sure that 
  they're consistent.
+
+[Run the notebook in Google Colab](https://colab.sandbox.google.com/github/jarokaz/mlops-miniworkshop/blob/master/Lab-01-TFDV/TFDV.ipynb)
