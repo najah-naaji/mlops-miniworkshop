@@ -20,11 +20,11 @@ SUBSTITUTIONS=\
 _PIPELINE_NAME=online_news_training_pipeline,\
 _PIPELINE_IMAGE=online_news_training_pipeline,\
 _GCP_REGION=us-central1,\
-_ARTIFACT_STORE_BUCKET=tfw-demo-artifact-store,\
+_ARTIFACT_STORE_BUCKET=kfp-tfx-demo-artifact-store,\
 _PIPELINE_FOLDER=online_news,\
 _PIPELINE_DSL=pipeline_dsl.py,\
-_TAG=latest,\
-_CLUSTER_NAME=tfw-demo-kfp-cluster,\
+_TAG_NAME=latest,\
+_CLUSTER_NAME=kfp-tfx-demo-cluster,\
 _ZONE=us-central1-a
 
 gcloud builds submit ../pipelines --config cloudbuild.yaml --substitutions $SUBSTITUTIONS
