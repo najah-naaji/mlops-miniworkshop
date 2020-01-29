@@ -1,6 +1,6 @@
 # Setting up a lab environment.
 
-The labs in this repo are designed to run in a simple MLOps environment. 
+The labs in this repo are designed to run in a simplified MLOps environment. 
 
 ![Reference topolgy](/images/lab_env.png)
 
