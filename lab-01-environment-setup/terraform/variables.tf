@@ -1,36 +1,51 @@
 variable "project_id" {
     description = "The GCP project ID"
+    type        = string
 }
 
-variable "cluster_location" {
-    description = "The location the GKE cluster"
+variable "zone" {
+    description = "The zone for the GKE cluster"
 }
 
-variable "cluster_name" {
-    description = "The name of the Kubernetes cluster"
+variable "name_prefix" {
+    description = "The name prefix to add to the resource names"
+    type        = string
 }
-
 
 variable "cluster_node_count" {
     description = "The cluster's node count"
     default     = 3
 }
 
-variable "kfp_sa_id" {
-    description = "The ID of the Kubeflow Pipelines service account"
-    default     = "kfp-sa"
+variable "cluster_node_type" {
+    description = "The cluster's node type"
+    default     = "n1-standard-4"
 }
 
-variable "cluster_sa_id" {
-    description = "The ID of the Least Priviledge GKE service account"
-    default     = "gke-sa"
+variable "cluster_node_description" {
+    description = "The cluster's description"
+    default     = "KFP GKE cluster"
 }
 
-variable "bucket_name" {
-    description = "The name of a GCS storage bucket that will be used as an artifact store"
+variable "gke_service_account_roles" {
+  description = "The roles to assign to the GKE service account"
+  default = [
+    "logging.logWriter",
+    "monitoring.metricWriter", 
+    "monitoring.viewer", 
+    "stackdriver.resourceMetadata.writer",
+    "storage.objectViewer" 
+    ] 
 }
 
-variable "kfp_version" {
-    description = "The version of Kubeflow Pipelines to install"
-    default     = "0.1.27"
+variable "kfp_service_account_roles" {
+  default = [    
+    "storage.admin", 
+    "bigquery.admin", 
+    "automl.admin", 
+    "automl.predictor",
+    "ml.admin",
+    "dataflow.admin",
+    "cloudsql.admin"
+  ]
 }

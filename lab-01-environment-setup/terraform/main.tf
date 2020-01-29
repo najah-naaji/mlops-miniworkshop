@@ -1,34 +1,48 @@
-
 terraform {
   required_version = ">= 0.12"
+  required_providers {
+    google = "~> 2.0"
+  }
 }
 
-# Configure GCP provider
+# Provision MVP KFP infrastructure using reusable Terraform modules from
+# github/jarokaz/terraform-gcp-kfp
+
 provider "google" {
-    project      = var.project_id
+    project   = var.project_id 
 }
 
-# Enable cloud services and configure service accounts: 
-module "service_accounts" {
-    source    = "./modules/service_accounts"
-    kfp_sa_id = var.kfp_sa_id
-    cluster_sa_id  = var.cluster_sa_id
+# Create the GKE service account 
+module "gke_service_account" {
+  source                       = "./modules/service_account"
+  service_account_id           = "${var.name_prefix}-gke-sa"
+  service_account_display_name = "The GKE service account"
+  service_account_roles        = var.gke_service_account_roles
 }
 
-# Configure GKE cluster with Kubeflow Pipelines
-module "kfp_cluster" {
-    source       = "./modules/kfp_cluster"
-    location     = var.cluster_location
-    cluster_name = var.cluster_name
-    sa_email     = module.service_accounts.cluster_sa_email
-    kfp_version  = var.kfp_version
-    kfp_sa_key   = module.service_accounts.kfp_sa_key
+# Create the KFP service account 
+module "kfp_service_account" {
+  source                       = "./modules/service_account"
+  service_account_id           = "${var.name_prefix}-sa"
+  service_account_display_name = "The KFP service account"
+  service_account_roles        = var.kfp_service_account_roles
 }
 
-# Create GCS bucket for pipeline artifacts
-resource "google_storage_bucket" "artifacts-store" {
-  name          = var.bucket_name
-  storage_class = "MULTI_REGIONAL"
+
+# Create the KFP GKE cluster
+module "kfp_gke_cluster" {
+  source                 = "github.com/jarokaz/terraform-gcp-kfp/modules/gke"
+  name                   = "${var.name_prefix}-cluster"
+  location               = var.zone
+  description            = var.cluster_node_description
+  sa_full_id             = module.gke_service_account.service_account.email
+  node_count             = var.cluster_node_count
+  node_type              = var.cluster_node_type
+}
+
+# Create Cloud Storage bucket for artifact storage
+resource "google_storage_bucket" "artifact_store" {
+  name          = "${var.name_prefix}-artifact-store"
   force_destroy = true
 }
 
