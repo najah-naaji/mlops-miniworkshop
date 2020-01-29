@@ -1,16 +1,12 @@
-# Setting up an MLOps environment on GCP.
+# Setting up a lab environment.
 
-The labs in this repo are designed to run in a reference MLOps environment. The environment is configured to support effective development and operationalization of production grade ML workflows.
+The labs in this repo are designed to run in a simple MLOps environment. 
 
 ![Reference topolgy](/images/lab-env.png)
 
 The core services in the environment are:
 - AI Platform Notebooks - ML experimentation and development
-- AI Platform Training - scalable, serverless model training
-- AI Platform Prediction - scalable, serverless model serving
-- Dataflow - distributed data processing
-- BigQuery - analytics data warehouse
-- Cloud Storage - unified object storage
+- Cloud Storage - an artifact store
 - TensorFlow Extended/Kubeflow Pipelines (TFX/KFP) - machine learning pipelines
 - Cloud SQL - machine learning metadata  management
 - Cloud Build - CI/CD
