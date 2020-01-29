@@ -9,6 +9,7 @@ The core services in the environment are:
 - **Cloud Storage** - a GCS bucket for pipeline artifacts
 - **Kubeflow Pipelines** - a lightweight deployment of Kubeflow Pipelines on GKE hosting ML Pipelines and ML Metadata services. GKE will also be used as a primary execution environment for KFP and TFX components.
 - **Cloud Build** - CI/CD
+- **Container Registry** - a registry for container images encapsulating pipeline components
     
 In the lab environment, all services are provisioned in the same [Google Cloud Project](https://cloud.google.com/storage/docs/projects). Before proceeding make sure that your account has access to the project and is assigned to the **Owner** or **Editor** role.
 
