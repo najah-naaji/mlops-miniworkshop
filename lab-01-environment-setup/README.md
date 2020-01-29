@@ -2,24 +2,21 @@
 
 The labs in this repo are designed to run in a simple MLOps environment. 
 
-![Reference topolgy](/images/lab-env.png)
+![Reference topolgy](/images/lab_env.png)
 
 The core services in the environment are:
-- AI Platform Notebooks - ML experimentation and development
-- Cloud Storage - an artifact store
-- TensorFlow Extended/Kubeflow Pipelines (TFX/KFP) - machine learning pipelines
-- Cloud SQL - machine learning metadata  management
+- AI Platform Notebooks - your development experimentation environment
+- Cloud Storage - a GCS bucket for pipeline artifacts
+- TensorFlow Extended/Kubeflow Pipelines (TFX/KFP) - a lightweight deployment of Kubeflow Pipelines on GKE
 - Cloud Build - CI/CD
     
-In this lab, you will create an **AI Platform Notebook** instance using a custom container image optimized for TFX/KFP development. In the **lab-02-environment-kfp** lab, you will provision a lightweight deployment of **Kubeflow Pipelines**.
-
-In the reference environment, all services are provisioned in the same [Google Cloud Project](https://cloud.google.com/storage/docs/projects). Before proceeding make sure that your account has access to the project and is assigned to the **Owner** or **Editor** role.
+In the lab environment, all services are provisioned in the same [Google Cloud Project](https://cloud.google.com/storage/docs/projects). Before proceeding make sure that your account has access to the project and is assigned to the **Owner** or **Editor** role.
 
 Although you can run the below commands from any workstation configured with *Google Cloud SDK*, the following instructions have been tested on GCP [Cloud Shell](https://cloud.google.com/shell/).
 
 ## Enabling the required cloud services
 
-In addition to the [services enabled by default](https://cloud.google.com/service-usage/docs/enabled-service), the following additional services must be enabled in the project hosting an MLOps environment:
+In addition to the [services enabled by default](https://cloud.google.com/service-usage/docs/enabled-service), the following additional services must be enabled in the project hosting your lab environment:
 
 1. Compute Engine
 1. Container Registry
@@ -56,7 +53,9 @@ gcloud services enable cloudbuild.googleapis.com \
 
 ## Creating an **AI Platform Notebooks** instance
 
-You will use a custom container image configured for KFP/TFX development as an environment for your instance. The image is a derivative of the standard TensorFlow 1.15  [AI Deep Learning Containers](https://cloud.google.com/ai-platform/deep-learning-containers/docs/) image.
+You will be using an **AI Platform Notebook** instance, configured with a custom container image optimized for TFX/KFP development, as your primary development/experimentation environment 
+
+The image is a derivative of the standard TensorFlow 1.15  [AI Deep Learning Containers](https://cloud.google.com/ai-platform/deep-learning-containers/docs/) image.
 
 ### Creating the custom image's Dockerfile:
 
@@ -65,8 +64,8 @@ You will use a custom container image configured for KFP/TFX development as an e
 2. Create a working folder in your `home` directory
 ```
 cd
-mkdir lab-01-workspace
-cd lab-01-workspace
+mkdir lab-setup
+cd lab-setup
 ```
 
 3. Create Dockerfile 
