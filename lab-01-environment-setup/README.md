@@ -5,10 +5,10 @@ The labs in this repo are designed to run in a simplified MLOps environment.
 ![Reference topolgy](/images/lab-env.png)
 
 The core services in the environment are:
-- AI Platform Notebooks - your development experimentation environment
-- Cloud Storage - a GCS bucket for pipeline artifacts
-- TensorFlow Extended/Kubeflow Pipelines (TFX/KFP) - a lightweight deployment of Kubeflow Pipelines on GKE hosting ML pipeline and ML Metadata services. GKE will also be used as a primary execution environment for pipeline components.
-- Cloud Build - CI/CD
+- **AI Platform Notebooks** - your development experimentation environment
+- **Cloud Storage** - a GCS bucket for pipeline artifacts
+- **Kubeflow Pipelines** - a lightweight deployment of Kubeflow Pipelines on GKE hosting ML Pipelines and ML Metadata services. GKE will also be used as a primary execution environment for KFP and TFX components.
+- **Cloud Build** - CI/CD
     
 In the lab environment, all services are provisioned in the same [Google Cloud Project](https://cloud.google.com/storage/docs/projects). Before proceeding make sure that your account has access to the project and is assigned to the **Owner** or **Editor** role.
 
