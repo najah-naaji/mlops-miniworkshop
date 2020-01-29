@@ -31,7 +31,7 @@ module "kfp_service_account" {
 
 # Create the KFP GKE cluster
 module "kfp_gke_cluster" {
-  source                 = "github.com/jarokaz/terraform-gcp-kfp/modules/gke"
+  source                 = "./modules/gke"
   name                   = "${var.name_prefix}-cluster"
   location               = var.zone
   description            = var.cluster_node_description

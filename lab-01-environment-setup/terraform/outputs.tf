@@ -1,25 +1,20 @@
 output "cluster_name" {
-    value = module.kfp_cluster.cluster_name
+    value = module.kfp_gke_cluster.name
 }
 
-output "cluster_endpoint" {
-    value = module.kfp_cluster.cluster_endpoint
+output "cluster_zone" {
+    value = var.zone
 }
-
 
 output "kfp_sa_email" {
-    value = module.service_accounts.kfp_sa_email
+    value =module.kfp_service_account.service_account.email
 }
 
-output "kfp_sa_name" {
-    value = module.service_accounts.kfp_sa_name
+output "gke_sa_name" {
+    value = module.gke_service_account.service_account.email
 }
 
-output "lp_sa_email" {
-    value = module.service_accounts.cluster_sa_email
-}
 
-output "lp_sa_name" {
-    value = module.service_accounts.cluster_sa_name
+output "artifact_store_bucket" {
+    value = google_storage_bucket.artifact_store.name
 }
-
