@@ -119,4 +119,10 @@ You will use [JupyterLab](https://jupyter.org/) IDE as your primary development 
 
 After the instance is created, you can connect to [JupyterLab](https://jupyter.org/) IDE by clicking the *OPEN JUPYTERLAB* link.
 
-## Installing a lightweight deployment of Kubeflow Pipelines
+## Provisionining Kubeflow Pipelines environment
+
+### Creating GKE and Cloud Storage
+
+### Deploying Kubeflow Pipelines
+
+
