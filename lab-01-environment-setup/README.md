@@ -37,6 +37,9 @@ To enable the required services using `gcloud`:
 
 2. Execute the below command.
 ```
+PROJECT_ID=[YOUR_PROJECT_ID]
+gcloud config set project $PROJECT_ID
+
 gcloud services enable cloudbuild.googleapis.com \
 	container.googleapis.com \
 	cloudresourcemanager.googleapis.com \
@@ -87,7 +90,7 @@ EOF
 ### Building the image and pushing it to your project's **Container Registry**
 
 ```
-PROJECT_ID=$(gcloud config get-value core/project)
+PROJECT_ID=[YOUR_PROJECT_ID]
 IMAGE_NAME=mlops-dev
 TAG=TF115-TFX015-KFP136
 
