@@ -2,7 +2,7 @@
 
 The labs in this repo are designed to run in a simplified MLOps environment. 
 
-![Reference topolgy](/images/lab_env.png)
+![Reference topolgy](/images/lab-env.png)
 
 The core services in the environment are:
 - AI Platform Notebooks - your development experimentation environment
