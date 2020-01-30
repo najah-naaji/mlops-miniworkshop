@@ -83,13 +83,16 @@ Use the following values for the substitution variables:
 
 |Variable|Value|
 |--------|-----|
-|_TFX_IMAGE_URI|tfx:0.15.0|
-|_KFP_INVERSE_PROXY_HOST|[YOUR_INVERTING_PROXY]|
+|_PIPELINE_NAME|tfx_covertype_training_deployment|
 |_PIPELINE_DSL|pipeline_dsl.py|
 |_PIPELINE_FOLDER|lab-04-tfx-cicd/pipeline-dsl|
-|_PIPELINE_NAME|tfx_covertype_training_deployment|
-|_ARTIFACT_STORE_URI|[YOUR_ARTIFACT_STORE|
-|_DATA_ROOT_URI|[YOUR_DATA_ROOT]|
+|_TFX_IMAGE_URI|tfx:0.15.0|
+|_ARTIFACT_STORE_URI|[YOUR_ARTIFACT_STORE]|
+|_DATA_ROOT_URI|gs://workshop-datasets/covertype/full|
+|_KFP_INVERSE_PROXY_HOST|[YOUR_INVERTING_PROXY]|
+
+
+
 
 
 3. To start an automated build [create a new release of the repo in GitHub](https://help.github.com/en/github/administering-a-repository/creating-releases). Alternatively, you can start the build by applying a tag using `git`. 
