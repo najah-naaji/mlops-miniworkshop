@@ -12,7 +12,7 @@ This lab uses the TFX code developed in lab-22-tfx-pipeline.
 
 ### AI Platform Notebooks and KFP environment
 
-Before proceeding with the lab, you must set up an AI Platform Notebook instance and a KFP environment as detailed in lab-01-environment-notebook and lab-02-environment-kfp
+Before proceeding with the lab, you must set up an AI Platform Notebook instance and a KFP environment as detailed in `lab-01-environment-environment`.
 
 
 ## Lab Exercises
@@ -21,10 +21,9 @@ Follow the instructor who will walk you through the lab. The high level summary 
 
 ### Authoring the CI/CD workflow that builds and deploy the TFX training pipeline
 
-The **Cloud Build** CI/CD workflow automates the steps you walked through manually during `lab-22-tfx-pipeline`:
-1. Builds the custom TFX image to be used as a runtime execution environment for TFX components and as the AI Platform Training training container.
+The **Cloud Build** CI/CD workflow automates the steps you walked through manually during `lab-02-tfx-pipeline`:
+1. Uploads the module file with data preprocessing and training code to the artifact store
 1. Compiles the pipeline and uploads the pipeline to the KFP environment
-1. Pushes the custom TFX image to your project's **Container Registry**
 
 The **Cloud Build** workflow configuration uses both standard and custom [Cloud Build builders](https://cloud.google.com/cloud-build/docs/cloud-builders). The custom builder encapsulates **TFX CLI**. 
 
@@ -35,7 +34,7 @@ To create a **Cloud Build** custom builder that encapsulates **TFX CLI**.
 1. Create the Dockerfile describing the TFX CLI builder
 ```
 cat > Dockerfile << EOF
-FROM gcr.io/deeplearning-platform-release/tf-cpu.1-15
+FROM FROM gcr.io/deeplearning-platform-release/tf2-cpu.2-0:m39
 RUN pip install -U six==1.12 apache-beam==2.16 pyarrow==0.14.0 tfx-bsl==0.15.1 \
 && pip install -U tfx==0.15 \
 && pip install -U https://storage.googleapis.com/ml-pipeline/release/0.1.36/kfp.tar.gz 
@@ -84,17 +83,13 @@ Use the following values for the substitution variables:
 
 |Variable|Value|
 |--------|-----|
-|_TFX_IMAGE_NAME|custom-tfx-image|
+|_TFX_IMAGE_URI|tfx:0.15.0|
 |_KFP_INVERSE_PROXY_HOST|[YOUR_INVERTING_PROXY]|
 |_PIPELINE_DSL|pipeline_dsl.py|
-|_PIPELINE_FOLDER|lab-23-tfx-cicd/pipeline-dsl|
+|_PIPELINE_FOLDER|lab-02-tfx-cicd/pipeline-dsl|
 |_PIPELINE_NAME|tfx_covertype_training_deployment|
-|_PYTHON_VERSION|3.7|
-|_RUNTIME_VERSION|1.15|
 |_ARTIFACT_STORE_URI|[YOUR_ARTIFACT_STORE|
 |_DATA_ROOT_URI|[YOUR_DATA_ROOT]|
-|_GCP_REGION|[YOUR_REGION]|
-
 
 
 3. To start an automated build [create a new release of the repo in GitHub](https://help.github.com/en/github/administering-a-repository/creating-releases). Alternatively, you can start the build by applying a tag using `git`. 

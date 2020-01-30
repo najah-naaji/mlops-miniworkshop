@@ -20,26 +20,20 @@
 # 
 
 steps:
-# Build the image that encapsulates transform and train modules
-- name: 'gcr.io/cloud-builders/docker'
-  args: ['build', '-t', 'gcr.io/$PROJECT_ID/$_TFX_IMAGE_NAME:$TAG_NAME', '.']
+# Copy the transform/train module to artifact store
+- name: 'gcr.io/cloud-builders/gcloud'
+  args: ['gsutil', 'cp', 'transform_train.py', '$_ARTIFACT_STORE_URI/modules/']
   dir: $_PIPELINE_FOLDER
 
-
-  
+# Compile and deploy the pipeline  
 - name: 'gcr.io/$PROJECT_ID/tfx-cli'
   args: ['pipeline', 'create', '--engine', 'kubeflow', '--pipeline_path', '$_PIPELINE_DSL', '--endpoint', '$_KFP_INVERSE_PROXY_HOST']
   env: 
-  - 'TFX_IMAGE=gcr.io/$PROJECT_ID/$_TFX_IMAGE_NAME:$TAG_NAME'
+  - 'TFX_IMAGE=$_TFX_IMAGE_NAME'
   - 'PROJECT_ID=$PROJECT_ID'
   - 'ARTIFACT_STORE_URI=$_ARTIFACT_STORE_URI'
   - 'DATA_ROOT_URI=$_DATA_ROOT_URI'
   - 'PIPELINE_NAME=${_PIPELINE_NAME}-${TAG_NAME}'
-  - 'GCP_REGION=$_GCP_REGION'
-  - 'RUNTIME_VERSION=_$_RUNTIME_VERSION'
-  - 'PYTHON_VERSION=$_PYTHON_VERSION'
   dir: $_PIPELINE_FOLDER
 
 
-# Push the custom image to Container Registry 
-images: ['gcr.io/$PROJECT_ID/$_TFX_IMAGE_NAME:$TAG_NAME']
