@@ -13,25 +13,20 @@ The pipeline implements a typical TFX workflow as depicted on the below diagram:
 
 The source data in a CSV file format is in the GCS bucket.
 
-The TFX `ExampleGen`, `StatisticsGen`, `ExampleValidator`, `SchemaGen`, `Transform`, and `Evaluator` components run as KFP components.
+The TFX components run containers orchestrated by Kubeflow Pipelines.
 
 
 ## Lab setup
 
 ### AI Platform Notebook and KFP environment
-Before proceeding with the lab, you must set up an **AI Platform Notebooks** instance and a **KFP** environment as detailed in lab-01-environment-notebook and lab-02-environment-kfp
+Before proceeding with the lab, you must set up an **AI Platform Notebooks** instance and a **KFP** environment as detailed in lab-01-environment-setup.
 
 ### Lab dataset
 
-The TFX pipeline in the lab is designed to ingest the *Covertype Data Set* in the CSV format from the GCS location. To prepare for the lab create a GCS bucket in your project and upload the file to a subfolder in the bucket.
+The TFX pipeline in the lab is designed to ingest the *Covertype Data Set* in the CSV format from the GCS location. To prepare for the lab  upload the file to a subfolder in the artifact store bucket created during the setup.
 
-1. Create a GCS bucket
-```
-PROJECT_ID=[YOUR_PROJECT_ID]
-BUCKET_NAME=gs://${PROJECT_ID}-staging
-gsutil mb -p $PROJECT_ID $BUCKET_NAME
-```
-2. Upload the *Covertype Data Set* CSV file
+
+1. Upload the *Covertype Data Set* CSV file
 ```
 COVERTYPE_GCS_PATH=${BUCKET_NAME}/covertype_dataset/
 gsutil cp gs://workshop-datasets/covertype/full/dataset.csv $COVERTYPE_GCS_PATH
@@ -48,11 +43,9 @@ Follow the instructor who will walk you through the lab. The high level summary 
 
 ### Understanding the pipeline's DSL.
 
-The pipeline uses a custom docker image, which is a derivative of the [tensorflow/tfx:0.15.0 image](https://hub.docker.com/r/tensorflow/tfx), as a runtime execution environment for the pipeline's components. The same image is also used as a a training image used by **AI Platform Training**
+The pipeline uses the [tensorflow/tfx:0.15.0 image](https://hub.docker.com/r/tensorflow/tfx), as a runtime execution environment for the pipeline's components. 
 
-The base `tfx` image includes TFX v0.15 and TensorFlow v2.0. The custom image modifies the base image by downgrading to TensorFlow v1.15 and adding the `modules` folder with the `transform_train.py` file that contains data transformation and training code used by the pipeline's `Transform` and `Train` components.
 
-The pipeline needs to use v1.15 of TensorFlow as the AI Platform Prediction service, which is used as a deployment target, does not yet support v2.0 of TensorFlow.
 
 ### Building and deploying the pipeline
 You can use **TFX CLI** to compile and deploy the pipeline to the KFP environment. As the pipeline uses the custom image, the first step is to build the image and push it to your project's **Container Registry**. You will use **Cloud Build** to build the image.
