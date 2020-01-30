@@ -28,8 +28,8 @@ The TFX pipeline in the lab is designed to ingest the *Covertype Data Set* in th
 
 1. Upload the *Covertype Data Set* CSV file
 ```
-BUCKET_NAME=[YOUR_ARTIFACT_BUCKET]
-COVERTYPE_GCS_PATH=${BUCKET_NAME}/covertype_dataset/
+ARTIFACT_STORE_URI=[YOUR_ARTIFACT_STORE_URI]
+COVERTYPE_GCS_PATH=${ARTIFACT_STORE_URI}/covertype_dataset/
 gsutil cp gs://workshop-datasets/covertype/full/dataset.csv $COVERTYPE_GCS_PATH
 ```
 3. Verify that the file was uploaded 
@@ -38,7 +38,7 @@ gsutil ls $COVERTYPE_GCS_PATH
 ```
 where
 
-[YOUR_ARTIFACT_BUCKET] is a GCS bucket created during setup - `gs://[YOUR_PREFIX]-artifact-store`
+[YOUR_ARTIFACT_STORE_URI] is a URI to the GCS bucket created during setup - `gs://[YOUR_PREFIX]-artifact-store`
 
 ## Lab Exercises
 
