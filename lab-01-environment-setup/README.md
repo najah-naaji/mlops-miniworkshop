@@ -72,7 +72,7 @@ cd lab-setup
 3. Create Dockerfile 
 ```
 cat > Dockerfile << EOF
-FROM gcr.io/deeplearning-platform-release/tf2-cpu.2-0
+FROM gcr.io/deeplearning-platform-release/tf2-cpu.2-0:m39
 RUN apt-get update -y && apt-get -y install kubectl
 RUN pip install -U six==1.12 apache-beam==2.16 pyarrow==0.14.0 tfx-bsl==0.15.1 \
 && pip install -U tfx==0.15 \
