@@ -104,10 +104,6 @@ tfx pipeline create --engine kubeflow --pipeline_path pipeline_dsl.py --endpoint
 ```
 
 
-```
-gcloud container clusters get-credentials [YOUR_GKE_CLUSTER] --zone [YOUR_ZONE]
-kubectl describe configmap inverse-proxy-config -n [YOUR_NAMESPACE] | grep "googleusercontent.com"
-```
 
 The `tfx pipeline create` command compiled the pipeline's DSL into the KFP package file - `tfx_covertype_classifier_training.tar.gz`. The package file contains the description of the pipeline in the YAML format. If you want to examine the file, extract from the tarball file and use the JupyterLab editor.
 
@@ -124,12 +120,12 @@ After the pipeline has been deployed, you can trigger and monitor pipeline runs 
 
 To submit the pipeline run using **TFX CLI**:
 ```
-tfx run create --pipeline_name tfx_covertype_classifier_training --endpoint $KFP_INVERSE_PROXY_HOST
+tfx run create --pipeline_name $PIPELINE_NAME --endpoint $KFP_INVERSE_PROXY_HOST
 ```
 
 To list all the active runs of the pipeline:
 ```
-tfx run list --pipeline_name tfx_covertype_classifier_training --endpoint $KFP_INVERSE_PROXY_HOST
+tfx run list --pipeline_name $PIPELINE_NAME --endpoint $KFP_INVERSE_PROXY_HOST
 ```
 
 To retrieve the status of a given run:
