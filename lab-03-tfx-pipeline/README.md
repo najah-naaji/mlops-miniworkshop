@@ -52,9 +52,12 @@ Where
 You can retrieve the inverse proxy hostname from the GKE Console or using the below command:
 
 ```
-gcloud container clusters get-credentials [YOUR_GKE_CLUSTER] --zone [YOUR_ZONE]
-kubectl describe configmap inverse-proxy-config -n [YOUR_NAMESPACE] | grep "googleusercontent.com"
+gcloud container clusters get-credentials [YOUR_GKE_CLUSTER_NAME] --zone [YOUR_ZONE]
+kubectl describe configmap inverse-proxy-config -n kubeflow | grep "googleusercontent.com"
 ```
+
+Where:
+- [YOUR_GKE_CLUSTER_NAME] is the name of your GKE cluster in the `[PREFIX]-cluster` format.
 
 Upload the module file into the GCS location:
 ```
