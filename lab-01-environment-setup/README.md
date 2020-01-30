@@ -147,5 +147,6 @@ After the installation completes, you can access the KFP UI from the following U
 
 ```
 gcloud container clusters get-credentials $PREFIX-cluster --zone $ZONE
-echo "https://"$(kubectl describe configmap inverse-proxy-config -n $NAMESPACE | grep "googleusercontent.com")
+echo "https://"$(kubectl describe configmap inverse-proxy-config -n \
+$NAMESPACE | grep "googleusercontent.com")
 ```
