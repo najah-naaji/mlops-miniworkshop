@@ -57,7 +57,7 @@ ml.googleapis.com
 
 You will be using an **AI Platform Notebook** instance, configured with a custom container image optimized for TFX/KFP development, as your primary development/experimentation environment 
 
-The image is a derivative of the standard TensorFlow 1.15  [AI Deep Learning Containers](https://cloud.google.com/ai-platform/deep-learning-containers/docs/) image.
+The image is a derivative of the standard TensorFlow 2.0  [AI Deep Learning Containers](https://cloud.google.com/ai-platform/deep-learning-containers/docs/) image.
 
 ### Creating the custom image's Dockerfile:
 
