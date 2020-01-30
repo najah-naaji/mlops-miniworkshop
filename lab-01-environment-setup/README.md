@@ -37,7 +37,7 @@ To enable the required services using `gcloud`:
 
 2. Execute the below command.
 ```
-PROJECT_ID=[YOUR_PROJECT_ID]
+PROJECT_ID=$(gcloud config get-value core/project)
 
 gcloud config set project $PROJECT_ID
 gcloud services enable \
