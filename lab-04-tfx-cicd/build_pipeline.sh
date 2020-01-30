@@ -20,7 +20,6 @@ SUBSTITUTIONS=\
 _PIPELINE_NAME=tfx-covertype-classifier-training,\
 _TFX_IMAGE_URI=tensorflow/tfx:0.15.0,\
 _ARTIFACT_STORE_URI=gs://miniworkshop-artifact-store,\
-_TRAINED_MODEL_URI=gs://miniworkshop-artifact-store/trained_models,\
 _DATA_ROOT_URI=gs://workshop-datasets/covertype/full,\
 _PIPELINE_FOLDER=pipeline-dsl,\
 _PIPELINE_DSL=pipeline_dsl.py,\
