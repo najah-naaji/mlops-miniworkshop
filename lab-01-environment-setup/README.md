@@ -86,11 +86,11 @@ EOF
 
 ```
 PROJECT_ID=[YOUR_PROJECT_ID]
+
+gcloud config set project $PROJECT_ID
 IMAGE_NAME=mlops-dev
 TAG=TFX015-KFP136
-
 IMAGE_URI="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${TAG}"
-
 gcloud builds submit --timeout 15m --tag ${IMAGE_URI} .
 ```
 
