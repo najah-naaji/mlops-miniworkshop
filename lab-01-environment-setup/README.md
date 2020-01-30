@@ -146,11 +146,6 @@ The script installs GKE to the `us-central1-a` zone, which is a recommended loca
 After the installation completes, you can access the KFP UI from the following URL. You may need to wait a few minutes before the URL is operational.
 
 ```
-gcloud container clusters get-credentials $PREFIX-cluster --zone us-central1-a
+gcloud container clusters get-credentials $PREFIX-cluster --zone $ZONE
 echo "https://"$(kubectl describe configmap inverse-proxy-config -n $NAMESPACE | grep "googleusercontent.com")
 ```
-
-Where:
-- [YOUR_CLUSTER_NAME] is the name of the GKE cluster created during the setup. The name has the following format `[PREFIX]-cluster`
-- [YOUR_ZONE] is the zone of your GKE cluster.
-
