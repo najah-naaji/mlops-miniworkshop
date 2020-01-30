@@ -46,10 +46,7 @@ gcloud services enable cloudbuild.googleapis.com \
 	iam.googleapis.com \
 	containerregistry.googleapis.com \
 	containeranalysis.googleapis.com \
-	ml.googleapis.com \
-	sqladmin.googleapis.com \
-	dataflow.googleapis.com \
-	automl.googleapis.com
+	ml.googleapis.com 
 ```
 
 3. After the services are enabled, [grant the Cloud Build service account the Project Editor role](https://cloud.google.com/cloud-build/docs/securing-builds/set-service-account-permissions).
