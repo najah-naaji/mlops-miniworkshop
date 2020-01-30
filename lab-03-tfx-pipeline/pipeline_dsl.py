@@ -41,7 +41,6 @@ from tfx.extensions.google_cloud_ai_platform.pusher import executor as ai_platfo
 from tfx.utils.dsl_utils import external_input
 from typing import Dict, List, Text
 
-#from use_mysql_secret import use_mysql_secret
 from kfp import gcp
 
 def _create__pipeline(
