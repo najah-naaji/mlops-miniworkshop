@@ -13,7 +13,7 @@ The pipeline implements a typical TFX workflow as depicted on the below diagram:
 
 The source data in a CSV file format is in the GCS bucket.
 
-The TFX components run containers orchestrated by Kubeflow Pipelines.
+The TFX components run in containers orchestrated by Kubeflow Pipelines.
 
 
 ## Lab setup
