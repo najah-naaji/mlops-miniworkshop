@@ -40,13 +40,14 @@ To enable the required services using `gcloud`:
 PROJECT_ID=[YOUR_PROJECT_ID]
 
 gcloud config set project $PROJECT_ID
-gcloud services enable cloudbuild.googleapis.com \
-	container.googleapis.com \
-	cloudresourcemanager.googleapis.com \
-	iam.googleapis.com \
-	containerregistry.googleapis.com \
-	containeranalysis.googleapis.com \
-	ml.googleapis.com 
+gcloud services enable \
+cloudbuild.googleapis.com \
+container.googleapis.com \
+cloudresourcemanager.googleapis.com \
+iam.googleapis.com \
+containerregistry.googleapis.com \
+containeranalysis.googleapis.com \
+ml.googleapis.com 
 ```
 
 3. After the services are enabled, [grant the Cloud Build service account the Project Editor role](https://cloud.google.com/cloud-build/docs/securing-builds/set-service-account-permissions).
