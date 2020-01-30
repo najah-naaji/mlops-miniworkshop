@@ -48,18 +48,20 @@ Follow the instructor who will walk you through the lab. The high level summary 
 
 The pipeline uses the [tensorflow/tfx:0.15.0 image](https://hub.docker.com/r/tensorflow/tfx), as a runtime execution environment for the pipeline's components. 
 
+The `Transform` and `Train` components are configured to retrieve the module file with the preprocessing and training code from the folder in the artifact store GCS bucket.
+
+All code executes in containers on the GKE cluster.
+
 
 
 ### Building and deploying the pipeline
-You can use **TFX CLI** to compile and deploy the pipeline to the KFP environment. As the pipeline uses the custom image, the first step is to build the image and push it to your project's **Container Registry**. You will use **Cloud Build** to build the image.
+
+You will start by building a runtime image and pushing it to your project's **Container Registry**. Since the base [tensorflow/tfx:0.15.0 image](https://hub.docker.com/r/tensorflow/tfx) is not modified, we could refer to it directly in the pipeline's DSL; however creating the derivative image template will make it to do any modifications in future.
 
 1. Create the Dockerfile describing the custom image
 ```
 cat > Dockerfile << EOF
 FROM tensorflow/tfx:0.15.0
-RUN pip install -U tensorflow-serving-api==1.15 tensorflow==1.15
-RUN mkdir modules
-COPY  transform_train.py modules/
 EOF
 ```
 
