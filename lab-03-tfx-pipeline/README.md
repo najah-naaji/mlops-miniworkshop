@@ -13,7 +13,7 @@ The pipeline implements a typical TFX workflow as depicted on the below diagram:
 
 The source data in a CSV file format is in the GCS bucket.
 
-The TFX `ExampleGen`, `StatisticsGen`, `ExampleValidator`, `SchemaGen`, `Transform`, and `Evaluator` components use Cloud Dataflow as an execution engine. The `Trainer` and `Pusher` components use AI Platform Training and Prediction services.
+The TFX `ExampleGen`, `StatisticsGen`, `ExampleValidator`, `SchemaGen`, `Transform`, and `Evaluator` components run as KFP components.
 
 
 ## Lab setup
