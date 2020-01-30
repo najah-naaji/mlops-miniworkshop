@@ -46,8 +46,15 @@ export KFP_INVERSE_PROXY_HOST=[YOUR_INVERSE_PROXY_HOST]
 Where 
 - [YOUR_ARTIFACT_STORE_URI] is the URI of the bucket created during the KFP environment setup - `gs://[PREFIX]-artifact-store`
 - [YOUR_TFX_IMAGE_URI] is the URI of the image you created in the previous step. Make sure to specify a full URI including the tag
-- [YOUR_INVERSE_PROXY_HOST] is the hostname of the inverse proxy to your KFP installation. Recall that you can retrieve the inverse proxy hostname using the below command
+- [YOUR_INVERSE_PROXY_HOST] is the hostname of the inverse proxy to your KFP installation. 
 
+
+You can retrieve the inverse proxy hostname from the GKE Console or using the below command:
+
+```
+gcloud container clusters get-credentials [YOUR_GKE_CLUSTER] --zone [YOUR_ZONE]
+kubectl describe configmap inverse-proxy-config -n [YOUR_NAMESPACE] | grep "googleusercontent.com"
+```
 
 Upload the module file into the GCS location:
 ```
