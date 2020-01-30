@@ -68,7 +68,8 @@ EOF
 2. Submit the **Cloud Build** job
 ```
 PROJECT_ID=[YOUR_PROJECT_ID]
-IMAGE_NAME=lab-22-tfx-image
+
+IMAGE_NAME=tfx-image
 TAG=latest
 IMAGE_URI="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${TAG}"
 
