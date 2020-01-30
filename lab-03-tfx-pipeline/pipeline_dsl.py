@@ -100,8 +100,6 @@ def _create__pipeline(
   # Checks whether the model passed the validation steps and pushes the model
   # to a file destination if check passed.
   pusher = Pusher(
-      custom_executor_spec=executor_spec.ExecutorClassSpec(
-         ai_platform_pusher_executor.Executor),
       model_export=trainer.outputs.output,
       model_blessing=model_validator.outputs.blessing)
 
