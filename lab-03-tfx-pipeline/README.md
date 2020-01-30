@@ -18,27 +18,7 @@ The TFX components run in containers orchestrated by Kubeflow Pipelines.
 
 ## Lab setup
 
-### AI Platform Notebook and KFP environment
 Before proceeding with the lab, you must set up an **AI Platform Notebooks** instance and a **KFP** environment as detailed in `lab-01-environment-setup`.
-
-### Lab dataset
-
-The TFX pipeline in the lab is designed to ingest the *Covertype Data Set* in the CSV format from the GCS location. To prepare for the lab  upload the file to a subfolder in the artifact store bucket created during the setup.
-
-
-1. Upload the *Covertype Data Set* CSV file
-```
-ARTIFACT_STORE_URI=[YOUR_ARTIFACT_STORE_URI]
-COVERTYPE_GCS_PATH=${ARTIFACT_STORE_URI}/covertype_dataset/
-gsutil cp gs://workshop-datasets/covertype/full/dataset.csv $COVERTYPE_GCS_PATH
-```
-3. Verify that the file was uploaded 
-```
-gsutil ls $COVERTYPE_GCS_PATH
-```
-where
-
-[YOUR_ARTIFACT_STORE_URI] is a URI to the GCS bucket created during setup - `gs://[YOUR_PREFIX]-artifact-store`
 
 ## Lab Exercises
 
@@ -51,7 +31,6 @@ The pipeline uses the [tensorflow/tfx:0.15.0 image](https://hub.docker.com/r/ten
 The `Transform` and `Train` components are configured to retrieve the module file with the preprocessing and training code from the folder in the artifact store GCS bucket.
 
 All code executes in containers on the GKE cluster.
-
 
 
 ### Building and deploying the pipeline
