@@ -63,7 +63,6 @@ export PIPELINE_NAME=tfx_covertype_classifier_training
 export DATA_ROOT_URI=gs://workshop-datasets/covertype/full/
 export TFX_IMAGE_URI=tensorflow/tfx:0.15.0
 
-
 tfx pipeline create --engine kubeflow --pipeline_path pipeline_dsl.py --endpoint $KFP_INVERSE_PROXY_HOST
 ```
 
