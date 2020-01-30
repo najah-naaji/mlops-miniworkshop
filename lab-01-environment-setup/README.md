@@ -42,7 +42,7 @@ To enable the required services using `gcloud`:
 ```
 export PROJECT_ID=$(gcloud config get-value core/project)
 export PREFIX=$PROJECT_ID
-export NAMESPACE=$PROJECT_ID
+export NAMESPACE=kubeflow
 export REGION=us-central1
 export ZONE=us-central1-a
 
