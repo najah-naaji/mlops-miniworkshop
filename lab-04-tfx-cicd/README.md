@@ -76,7 +76,7 @@ You will set up a trigger that starts the CI/CD workflow when a new tag is appli
 |Trigger type| Tag|
 |Tag (regex)|.\*|
 |Build Configuration|Cloud Build configuration file (yaml or json)|
-|Cloud Build configuration file location|/ lab-23-tfx-cicd/cloudbuild.yaml|
+|Cloud Build configuration file location|/ lab-04-tfx-cicd/cloudbuild.yaml|
 
 
 Use the following values for the substitution variables:
@@ -86,7 +86,7 @@ Use the following values for the substitution variables:
 |_TFX_IMAGE_URI|tfx:0.15.0|
 |_KFP_INVERSE_PROXY_HOST|[YOUR_INVERTING_PROXY]|
 |_PIPELINE_DSL|pipeline_dsl.py|
-|_PIPELINE_FOLDER|lab-02-tfx-cicd/pipeline-dsl|
+|_PIPELINE_FOLDER|lab-04-tfx-cicd/pipeline-dsl|
 |_PIPELINE_NAME|tfx_covertype_training_deployment|
 |_ARTIFACT_STORE_URI|[YOUR_ARTIFACT_STORE|
 |_DATA_ROOT_URI|[YOUR_DATA_ROOT]|
