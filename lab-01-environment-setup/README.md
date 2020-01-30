@@ -114,6 +114,11 @@ You will use [JupyterLab](https://jupyter.org/) IDE as your primary development 
 After the instance is created, you can connect to [JupyterLab](https://jupyter.org/) IDE by clicking the *OPEN JUPYTERLAB* link.
 
 ## Provisionining Kubeflow Pipelines environment
+
+In this step you provision a lightweight deployment of Kubeflow Pipelines on Google Kubernetes Cluster (GKE).
+
+![KFP](/images/kfp.png)
+
 1. Connect to **JupyterLab** on the **AI Platform Notebooks** instance created in the `lab-01-environment-notebook` lab.
 
 2. Open the **JupyterLab** terminal
