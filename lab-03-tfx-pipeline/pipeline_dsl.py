@@ -41,14 +41,15 @@ from tfx.extensions.google_cloud_ai_platform.pusher import executor as ai_platfo
 from tfx.utils.dsl_utils import external_input
 from typing import Dict, List, Text
 
-from use_mysql_secret import use_mysql_secret
+#from use_mysql_secret import use_mysql_secret
 from kfp import gcp
 
 def _create__pipeline(
     pipeline_name: Text, 
     pipeline_root: Text, 
     data_root: Text,
-    module_file: Text) -> pipeline.Pipeline:
+    module_file: Text,
+    beam_pipeline_args: List[Text]) -> pipeline.Pipeline:
   """Implements the online news pipeline with TFX."""
 
   examples = external_input(data_root)
@@ -76,8 +77,6 @@ def _create__pipeline(
   # Uses user-provided Python function that implements a model using
   # TensorFlow's Estimators API.
   trainer = Trainer(
-      custom_executor_spec=executor_spec.ExecutorClassSpec(
-          ai_platform_trainer_executor.Executor),
       module_file=module_file,
       transformed_examples=transform.outputs.transformed_examples,
       schema=infer_schema.outputs.output,
@@ -123,46 +122,37 @@ if __name__ == '__main__':
   # Get settings from environment variables
   _pipeline_name = os.environ.get('PIPELINE_NAME')
   _project_id = os.environ.get('PROJECT_ID')
-  _gcp_region = os.environ.get('GCP_REGION')
-  _pipeline_image = os.environ.get('TFX_IMAGE')
+  _tfx_image = os.environ.get('TFX_IMAGE_URI')
   _gcs_data_root_uri = os.environ.get('DATA_ROOT_URI')
   _artifact_store_uri = os.environ.get('ARTIFACT_STORE_URI')
-  _runtime_version = os.environ.get('RUNTIME_VERSION')
-  _python_version = os.environ.get('PYTHON_VERSION')
+  _module_file_uri = os.environ.get('MODULE_FILE_URI')
    
-    
-  # Dataflow settings.
-  _beam_tmp_folder = '{}/beam/tmp'.format(_artifact_store_uri)
+  # Beam settings.
   _beam_pipeline_args = [
-    '--runner=DirectRunner',
-    '--project=' + _project_id
- #   '--region=' + _gcp_region,
+    '--runner=DirectRunner'
   ]
 
-  # ML Metadata settings
+  # ML Metadata settings for the MySQL deployment on GKE. 
   _metadata_config = kubeflow_pb2.KubeflowMetadataConfig()
   _metadata_config.mysql_db_service_host.environment_variable = 'MYSQL_SERVICE_HOST'
   _metadata_config.mysql_db_service_port.environment_variable = 'MYSQL_SERVICE_PORT'
   _metadata_config.mysql_db_name.value = 'metadb'
-  _metadata_config.mysql_db_user.environment_variable = 'MYSQL_USERNAME' 
-  _metadata_config.mysql_db_password.environment_variable = 'MYSQL_PASSWORD'
-
-
-  operator_funcs = [gcp.use_gcp_secret('user-gcp-sa'), use_mysql_secret('mysql-credential')]
-
+  _metadata_config.mysql_db_user.value = 'root' 
+  _metadata_config.mysql_db_password.value = ''
+    
   # Compile the pipeline
+  operator_funcs = [gcp.use_gcp_secret('user-gcp-sa')]
   runner_config = kubeflow_dag_runner.KubeflowDagRunnerConfig(
       kubeflow_metadata_config=_metadata_config,
       pipeline_operator_funcs=operator_funcs,
-      tfx_image=_pipeline_image
+      tfx_image=_tfx_image
   )
 
-  _module_file = 'modules/transform_train.py'
   _pipeline_root = '{}/{}'.format(_artifact_store_uri, _pipeline_name)
   kubeflow_dag_runner.KubeflowDagRunner(config=runner_config).run(
       _create__pipeline(
           pipeline_name=_pipeline_name,
           pipeline_root=_pipeline_root,
           data_root=_gcs_data_root_uri,
-          module_file=_module_file,
+          module_file=_module_file_uri,
           beam_pipeline_args=_beam_pipeline_args))
