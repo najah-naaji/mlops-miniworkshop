@@ -139,7 +139,7 @@ cd mlops-miniworkshop/lab-01-environment-setup
 ```
 Where 
 - `[PROJECT_ID]` - your project ID
-- `[PREFIX]` - the name prefix that will be added to the names of the provisioned resources
+- `[PREFIX]` - the prefix that will be added to the names of the provisioned resources
 
 The script installs GKE to the `us-central1-a` zone, which is a recommended location. If you need to install GKE to some other zone, specify the zone name as the last argument.
 
