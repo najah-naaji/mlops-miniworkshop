@@ -98,15 +98,6 @@ gcloud builds submit --timeout 15m --tag ${IMAGE_URI} .
 To provision an instance of **AI Platform Notebooks** using the custom image, follow the  [instructions in AI Platform Notebooks Documentation](https://cloud.google.com/ai-platform/notebooks/docs/custom-container). In the **Docker container image** field, enter the full name of the image (including the tag) you created in the previous step.
 
 
-### Assigning roles to the default Compute Engine account
-
-When using the instance, the GCP services are accessed using the [Compute Engine default service account](https://cloud.google.com/compute/docs/access/service-accounts). For the labs to work this account needs to have **Project/Editor**, **Kubernetes Engine/Kubernetes Engine Admin**, and **IAM/Security Admin** permissions in your project. The **Project/Editor** role is granted to the account by default.
-
-To grant the **IAM/Security Admin** and **Kubernetes Engine/Kubernetes Engine Admin** roles follow [this instructions](https://cloud.google.com/iam/docs/granting-roles-to-service-accounts). Recall that your projects' **Compute Engine default service account** is
-```
-[PROJECT_NUMBER]-compute@developer.gserviceaccount.com
-```
-
 ### Accessing JupyterLab IDE
 
 You will use [JupyterLab](https://jupyter.org/) IDE as your primary development environment for most of the labs in this repo, including **lab-02-environment-kfp** that guides you through the installation of a lightweight deployment of Kubeflow Pipelines.
