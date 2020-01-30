@@ -121,7 +121,7 @@ In this step you provision a lightweight deployment of Kubeflow Pipelines on Goo
 
 In the lightweight deployment only ML pipeline and metadata services are deployed to the GKE cluster. The services are configured to use the GKE hosted MySQL instance as Metadata store and [Minio](https://min.io/?gclid=EAIaIQobChMI_4ij7Ymq5wIVwRd9Ch0H2Q31EAAYASAAEgKk2PD_BwE) for artifact storage. External clients use Google managed Inverting Proxy to interact with the KFP services.
 
-Provisioning of the underlying infrastructure (GKE, service accounts, etc) and installing of KFP has been automated with **Terraform** and **Google Cloud SDK**.
+Provisioning of the underlying infrastructure (GKE, service accounts, etc) and installing of KFP have been automated with **Terraform** and **Google Cloud SDK**.
 
 To provision KFP environment
 
