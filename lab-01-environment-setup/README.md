@@ -10,7 +10,10 @@ The core services in the environment are:
 - **Kubeflow Pipelines** - a lightweight deployment of Kubeflow Pipelines on GKE hosting ML Pipelines and ML Metadata services. GKE will also be used as a primary execution environment for KFP and TFX components.
 - **Cloud Build** - CI/CD
 - **Container Registry** - a registry for container images encapsulating pipeline components
-    
+
+## Create a Project
+Create a new project in the GCP console, and select that project from the menu at the top left side of the console page.
+
 In the lab environment, all services are provisioned in the same [Google Cloud Project](https://cloud.google.com/storage/docs/projects). Before proceeding make sure that your account has access to the project and is assigned to the **Owner** or **Editor** role.
 
 Although you can run the below commands from any workstation configured with *Google Cloud SDK*, the following instructions have been tested on GCP [Cloud Shell](https://cloud.google.com/shell/).
@@ -38,6 +41,15 @@ To enable the required services using `gcloud`:
 2. Execute the below command.
 ```
 export PROJECT_ID=$(gcloud config get-value core/project)
+export PREFIX=$PROJECT_ID
+export NAMESPACE=$PROJECT_ID
+export REGION=us-central1
+export ZONE=us-central1-a
+
+gcloud compute project-info add-metadata --metadata \
+google-compute-default-region=$REGION
+gcloud compute project-info add-metadata --metadata \
+google-compute-default-zone=$ZONE
 
 gcloud config set project $PROJECT_ID
 gcloud services enable \
@@ -85,12 +97,9 @@ EOF
 ### Building the image and pushing it to your project's **Container Registry**
 
 ```
-PROJECT_ID=[YOUR_PROJECT_ID]
-
-gcloud config set project $PROJECT_ID
-IMAGE_NAME=mlops-dev
-TAG=TFX015-KFP136
-IMAGE_URI="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${TAG}"
+export IMAGE_NAME=mlops-dev
+export TAG=TFX015-KFP136
+export IMAGE_URI="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${TAG}"
 gcloud builds submit --timeout 15m --tag ${IMAGE_URI} .
 ```
 
@@ -125,11 +134,8 @@ cd mlops-miniworkshop/lab-01-environment-setup
 
 3. Start installation
 ```
-./install.sh [PROJECT_ID] [PREFIX]
+./install.sh $PROJECT_ID $PREFIX
 ```
-Where 
-- `[PROJECT_ID]` - your project ID
-- `[PREFIX]` - the prefix that will be added to the names of the provisioned resources
 
 The script installs GKE to the `us-central1-a` zone, which is a recommended location. If you need to install GKE to some other zone, specify the zone name as the last argument.
 
@@ -140,8 +146,8 @@ The script installs GKE to the `us-central1-a` zone, which is a recommended loca
 After the installation completes, you can access the KFP UI from the following URL. You may need to wait a few minutes before the URL is operational.
 
 ```
-gcloud container clusters get-credentials [YOUR_CLUSTER_NAME] --zone [[YOUR_ZONE]
-echo "https://"$(kubectl describe configmap inverse-proxy-config -n [NAMESPACE] | grep "googleusercontent.com")
+gcloud container clusters get-credentials $PREFIX-cluster --zone us-central1-a
+echo "https://"$(kubectl describe configmap inverse-proxy-config -n $NAMESPACE | grep "googleusercontent.com")
 ```
 
 Where:
