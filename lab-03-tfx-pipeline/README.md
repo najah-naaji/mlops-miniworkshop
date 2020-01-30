@@ -89,7 +89,7 @@ To upload the module file into the GCS location:
 ```
 export MODULE_FILE_URI=${ARTIFACT_STORE_URI}/modules/transform_train.py
 
-gsutil cp transform_train.py 
+gsutil cp transform_train.py $MODULE_FILE_URI
 ```
 
 The pipeline's DSL retrieves the settings controlling how the pipeline is compiled from the environment variables.To set the environment variables and compile and deploy the pipeline using  **TFX CLI**:
