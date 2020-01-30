@@ -49,6 +49,7 @@ def _create__pipeline(
     pipeline_root: Text, 
     data_root: Text,
     module_file: Text,
+    trained_model_uri: Text,
     beam_pipeline_args: List[Text]) -> pipeline.Pipeline:
   """Implements the online news pipeline with TFX."""
 
@@ -100,6 +101,9 @@ def _create__pipeline(
   # Checks whether the model passed the validation steps and pushes the model
   # to a file destination if check passed.
   pusher = Pusher(
+      push_destination=pusher_pb2.PushDestination(
+          filesystem=pusher_pb2.PushDestination.Filesystem(
+              base_directory=trained_model_uri)),
       model_export=trainer.outputs.output,
       model_blessing=model_validator.outputs.blessing)
 
@@ -124,6 +128,7 @@ if __name__ == '__main__':
   _gcs_data_root_uri = os.environ.get('DATA_ROOT_URI')
   _artifact_store_uri = os.environ.get('ARTIFACT_STORE_URI')
   _module_file_uri = os.environ.get('MODULE_FILE_URI')
+  _trained_model_uri = os.environ.get('TRAINED_MODEL_URI')
    
   # Beam settings.
   _beam_pipeline_args = [
@@ -146,11 +151,12 @@ if __name__ == '__main__':
       tfx_image=_tfx_image
   )
 
-  _pipeline_root = '{}/{}'.format(_artifact_store_uri, _pipeline_name)
+  _pipeline_root = '{}/{}'.format(_artifact_store_uri, _pipeline_name) 
   kubeflow_dag_runner.KubeflowDagRunner(config=runner_config).run(
       _create__pipeline(
           pipeline_name=_pipeline_name,
           pipeline_root=_pipeline_root,
           data_root=_gcs_data_root_uri,
           module_file=_module_file_uri,
+          trained_model_uri=_trained_model_uri,
           beam_pipeline_args=_beam_pipeline_args))
