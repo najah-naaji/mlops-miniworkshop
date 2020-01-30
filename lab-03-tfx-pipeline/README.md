@@ -56,7 +56,6 @@ All code executes in containers on the GKE cluster.
 
 ### Building and deploying the pipeline
 
-You will start by building a runtime image and pushing it to your project's **Container Registry**. Since the base [tensorflow/tfx:0.15.0 image](https://hub.docker.com/r/tensorflow/tfx) is not modified, we could refer to it directly in the pipeline's DSL; however creating the derivative image template will make it easier to do any modifications in future.
 
 Start by configuring your environment settings:
 ```
@@ -71,33 +70,19 @@ Where
 - [YOUR_INVERSE_PROXY_HOST] is the hostname of the inverse proxy to your KFP installation. Recall that you can retrieve the inverse proxy hostname using the below command
 
 
-To create the Dockerfile describing the TFX image:
-```
-cat > Dockerfile << EOF
-FROM tensorflow/tfx:0.15.0
-EOF
-```
-
-To build the image and push it to your project's **Container Registry**:
-```
-export TFX_IMAGE_URI=gcr.io/${PROJECT_ID}/tfx-image:latest
-
-gcloud builds submit --timeout 15m --tag ${TFX_IMAGE_URI} .
-```
-
-To upload the module file into the GCS location:
+Upload the module file into the GCS location:
 ```
 export MODULE_FILE_URI=${ARTIFACT_STORE_URI}/modules/transform_train.py
 
 gsutil cp transform_train.py $MODULE_FILE_URI
 ```
 
-The pipeline's DSL retrieves the settings controlling how the pipeline is compiled from the environment variables.To set the environment variables and compile and deploy the pipeline using  **TFX CLI**:
+Compile the pipeline.
 
 ```
-export DATA_ROOT_URI=${ARTIFACT_STORE_URI}/covertype_dataset/
 export PIPELINE_NAME=tfx_covertype_classifier_training
-export GCP_REGION=us-central1
+export DATA_ROOT_URI=${ARTIFACT_STORE_URI}/covertype_dataset/
+export TFX_IMAGE_URI=tensorflow/tfx:0.15.0
 
 
 tfx pipeline create --engine kubeflow --pipeline_path pipeline_dsl.py --endpoint $KFP_INVERSE_PROXY_HOST
