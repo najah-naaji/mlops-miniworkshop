@@ -63,12 +63,6 @@ Start by configuring your environment settings:
 export PROJECT_ID=[YOUR_PROJECT_ID]
 export ARTIFACT_STORE_URI=[YOUR_ARTIFACT_STORE_URI]
 export KFP_INVERSE_PROXY_HOST=[YOUR_INVERSE_PROXY_HOST]
-
-export DATA_ROOT_URI=${ARTIFACT_STORE_URI}/covertype_dataset/
-export TFX_IMAGE_URI=gcr.io/${PROJECT_ID}/tfx-image:latest
-export MODULE_FILE_URI=${ARTIFACT_STORE_URI}/modules/transform_train.py
-export PIPELINE_NAME=tfx_covertype_classifier_training
-export GCP_REGION=us-central1
 ```
 
 Where 
@@ -86,13 +80,14 @@ EOF
 
 To build the image and push it to your project's **Container Registry**:
 ```
+export TFX_IMAGE_URI=gcr.io/${PROJECT_ID}/tfx-image:latest
 
 gcloud builds submit --timeout 15m --tag ${TFX_IMAGE_URI} .
 ```
 
 To upload the module file into the GCS location:
 ```
-
+export MODULE_FILE_URI=${ARTIFACT_STORE_URI}/modules/transform_train.py
 
 gsutil cp transform_train.py 
 ```
@@ -100,7 +95,9 @@ gsutil cp transform_train.py
 The pipeline's DSL retrieves the settings controlling how the pipeline is compiled from the environment variables.To set the environment variables and compile and deploy the pipeline using  **TFX CLI**:
 
 ```
-
+export DATA_ROOT_URI=${ARTIFACT_STORE_URI}/covertype_dataset/
+export PIPELINE_NAME=tfx_covertype_classifier_training
+export GCP_REGION=us-central1
 
 
 tfx pipeline create --engine kubeflow --pipeline_path pipeline_dsl.py --endpoint $KFP_INVERSE_PROXY_HOST
