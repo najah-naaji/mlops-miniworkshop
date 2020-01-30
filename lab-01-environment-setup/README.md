@@ -38,8 +38,8 @@ To enable the required services using `gcloud`:
 2. Execute the below command.
 ```
 PROJECT_ID=[YOUR_PROJECT_ID]
-gcloud config set project $PROJECT_ID
 
+gcloud config set project $PROJECT_ID
 gcloud services enable cloudbuild.googleapis.com \
 	container.googleapis.com \
 	cloudresourcemanager.googleapis.com \
