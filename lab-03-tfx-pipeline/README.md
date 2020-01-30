@@ -81,7 +81,7 @@ Compile the pipeline.
 
 ```
 export PIPELINE_NAME=tfx_covertype_classifier_training
-export DATA_ROOT_URI=${ARTIFACT_STORE_URI}/covertype_dataset/
+export DATA_ROOT_URI=gs://workshop-datasets/covertype/full/
 export TFX_IMAGE_URI=tensorflow/tfx:0.15.0
 
 
