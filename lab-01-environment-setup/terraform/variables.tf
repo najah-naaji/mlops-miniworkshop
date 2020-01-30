@@ -14,7 +14,7 @@ variable "name_prefix" {
 
 variable "cluster_node_count" {
     description = "The cluster's node count"
-    default     = 1
+    default     = 2
 }
 
 variable "cluster_node_type" {
