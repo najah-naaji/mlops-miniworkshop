@@ -36,33 +36,28 @@ All code executes in containers on the GKE cluster.
 ### Building and deploying the pipeline
 
 
-Start by configuring your environment settings:
+In the **AI Platform Notebooks terminal**, start by configuring your environment settings:
 ```
-export PROJECT_ID=[YOUR_PROJECT_ID]
-export ARTIFACT_STORE_URI=[YOUR_ARTIFACT_STORE_URI]
-export KFP_INVERSE_PROXY_HOST=[YOUR_INVERSE_PROXY_HOST]
+export PROJECT_ID=$(gcloud config get-value core/project)
+export PREFIX=$PROJECT_ID
+export NAMESPACE=kubeflow
+export REGION=us-central1
+export ZONE=us-central1-a
+export ARTIFACT_STORE_URI=gs://$PREFIX-artifact-store
+export GKE_CLUSTER_NAME=$PREFIX-cluster
+gcloud container clusters get-credentials $GKE_CLUSTER_NAME --zone $ZONE
+export KFP_INVERSE_PROXY_HOST=$(kubectl describe configmap inverse-proxy-config -n kubeflow | grep "googleusercontent.com")
 ```
 
 Where 
-- [YOUR_ARTIFACT_STORE_URI] is the URI of the bucket created during the KFP environment setup - `gs://[PREFIX]-artifact-store`
-- [YOUR_TFX_IMAGE_URI] is the URI of the image you created in the previous step. Make sure to specify a full URI including the tag
-- [YOUR_INVERSE_PROXY_HOST] is the hostname of the inverse proxy to your KFP installation. 
-
-
-You can retrieve the inverse proxy hostname from the GKE Console or using the below command:
-
-```
-gcloud container clusters get-credentials [YOUR_GKE_CLUSTER_NAME] --zone [YOUR_ZONE]
-kubectl describe configmap inverse-proxy-config -n kubeflow | grep "googleusercontent.com"
-```
-
-Where:
-- [YOUR_GKE_CLUSTER_NAME] is the name of your GKE cluster in the `[PREFIX]-cluster` format.
+- [ARTIFACT_STORE_URI] is the URI of the bucket created during the KFP environment setup - `gs://[PREFIX]-artifact-store`
+- [KFP_INVERSE_PROXY_HOST] is the hostname of the inverse proxy to your KFP installation. 
+- [GKE_CLUSTER_NAME] is the name of your GKE cluster in the `[PREFIX]-cluster` format.
 
 Upload the module file into the GCS location:
 ```
+cd /home/mlops-miniworkshop/lab-03-tfx-pipeline
 export MODULE_FILE_URI=${ARTIFACT_STORE_URI}/modules/transform_train.py
-
 gsutil cp transform_train.py $MODULE_FILE_URI
 ```
 
@@ -86,7 +81,6 @@ tar xvf tfx_covertype_classifier_training.tar.gz
 
 The name of the extracted file is `pipeline.yaml`.
 
-
 ### Submitting and monitoring pipeline runs
 
 After the pipeline has been deployed, you can trigger and monitor pipeline runs using **TFX CLI** or **KFP UI**.
@@ -105,6 +99,10 @@ To retrieve the status of a given run:
 ```
 tfx run status --pipeline_name tfx_covertype_classifier_training --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
 ```
+
+Where
+- YOUR_RUN_ID is listed from the **tfx run list ...** command above
+
  To terminate a run:
  ```
  tfx run terminate --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
