@@ -101,8 +101,6 @@ To provision an instance of **AI Platform Notebooks** using the custom image, fo
 
 ### Accessing JupyterLab IDE
 
-You will use [JupyterLab](https://jupyter.org/) IDE as your primary development environment for most of the labs in this repo, including **lab-02-environment-kfp** that guides you through the installation of a lightweight deployment of Kubeflow Pipelines.
-
 After the instance is created, you can connect to [JupyterLab](https://jupyter.org/) IDE by clicking the *OPEN JUPYTERLAB* link.
 
 ## Provisionining Kubeflow Pipelines environment
