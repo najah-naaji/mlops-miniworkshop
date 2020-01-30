@@ -13,25 +13,8 @@
 # See the License for the specific language governing permissions and
 # limitations under the License.
 
-# Provision infrastructure to host KFP components
+# Destory KFP environment
 
-if [[ $# < 3 ]]; then
-  echo "Error: Arguments missing. [PROJECT_ID] [ZONE] [NAME_PREFIX]"
-  exit 1
-fi
-
-PROJECT_ID=${1}
-ZONE=${2}
-NAME_PREFIX=${3}
-
-### Configure KPF infrastructure
 pushd terraform
-
-# Start terraform build
-terraform init
-terraform apply  \
--var "project_id=$PROJECT_ID" \
--var "zone=$ZONE" \
--var "name_prefix=$NAME_PREFIX"
-
+terraform destroy 
 popd
