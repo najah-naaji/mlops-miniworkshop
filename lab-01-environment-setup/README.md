@@ -74,9 +74,6 @@ cd lab-setup
 cat > Dockerfile << EOF
 FROM gcr.io/deeplearning-platform-release/tf-cpu.1-15
 RUN apt-get update -y && apt-get -y install kubectl
-RUN cd /usr/local/bin \
-&& wget https://releases.hashicorp.com/terraform/0.12.19/terraform_0.12.19_linux_amd64.zip \
-&& unzip terraform_0.12.19_linux_amd64.zip
 RUN pip install -U six==1.12 apache-beam==2.16 pyarrow==0.14.0 tfx-bsl==0.15.1 \
 && pip install -U tfx==0.15 \
 && pip install -U tensorboard \
