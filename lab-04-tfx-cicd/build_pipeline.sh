@@ -20,13 +20,13 @@ SUBSTITUTIONS=\
 _PIPELINE_NAME=tfx-covertype-classifier-training,\
 _TFX_IMAGE_URI=tensorflow/tfx:0.15.0,\
 _ARTIFACT_STORE_URI=gs://miniworkshop-artifact-store,\
-_TRAINED_MODEL_URI=gs://miniworkshop-artifact-store/trained_model,\
-_DATA_ROOT_URI=gs://workshop-datasets/covertype/full/
-_PIPELINE_FOLDER=lab-02-tfx-cicd/pipeline-dsl,\
+_TRAINED_MODEL_URI=gs://miniworkshop-artifact-store/trained_models,\
+_DATA_ROOT_URI=gs://workshop-datasets/covertype/full,\
+_PIPELINE_FOLDER=pipeline-dsl,\
 _PIPELINE_DSL=pipeline_dsl.py,\
 _KFP_INVERSE_PROXY_HOST=2234cc1c12c20381-dot-us-central1.notebooks.googleusercontent.com,\
 TAG_NAME=test
 
-gcloud builds submit .. --config cloudbuild.yaml --substitutions $SUBSTITUTIONS
+gcloud builds submit . --config cloudbuild.yaml --substitutions $SUBSTITUTIONS
 
 

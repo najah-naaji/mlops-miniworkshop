@@ -21,20 +21,20 @@
 
 steps:
 # Copy the transform/train module to artifact store
-- name: 'gcr.io/cloud-builders/gcloud'
-  args: ['gsutil', 'cp', 'transform_train.py', '$_ARTIFACT_STORE_URI/modules/']
+- name: 'gcr.io/cloud-builders/gsutil'
+  args: ['cp', 'transform_train.py', '$_ARTIFACT_STORE_URI/modules/']
   dir: $_PIPELINE_FOLDER
 
 # Compile and deploy the pipeline  
 - name: 'gcr.io/$PROJECT_ID/tfx-cli'
   args: ['pipeline', 'create', '--engine', 'kubeflow', '--pipeline_path', '$_PIPELINE_DSL', '--endpoint', '$_KFP_INVERSE_PROXY_HOST']
   env: 
-  - 'TFX_IMAGE=$_TFX_IMAGE_NAME'
+  - 'TFX_IMAGE_URI=$_TFX_IMAGE_URI'
   - 'PROJECT_ID=$PROJECT_ID'
   - 'ARTIFACT_STORE_URI=$_ARTIFACT_STORE_URI'
   - 'DATA_ROOT_URI=$_DATA_ROOT_URI'
   - 'PIPELINE_NAME=${_PIPELINE_NAME}-${TAG_NAME}'
-  - 'TRAINED_MODEL_URI=${_TRAINED_MODEL_URI}/${TAGE_NAME}'
+  - 'TRAINED_MODEL_URI=${_TRAINED_MODEL_URI}/${_PIPELINE_NAME}/${TAG_NAME}'
   dir: $_PIPELINE_FOLDER
 
 
