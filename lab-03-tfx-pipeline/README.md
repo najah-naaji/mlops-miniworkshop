@@ -64,7 +64,7 @@ gsutil cp transform_train.py $MODULE_FILE_URI
 Compile the pipeline.
 
 ```
-export PIPELINE_NAME=tfx_covertype_classifier_training
+export PIPELINE_NAME=tfx_covertype_classifier_training-$(date +%s)
 export TRAINED_MODEL_URI=${ARTIFACT_STORE_URI}/trained_models/$PIPELINE_NAME
 export DATA_ROOT_URI=gs://workshop-datasets/covertype/full
 export TFX_IMAGE_URI=tensorflow/tfx:0.15.0
@@ -107,5 +107,3 @@ Where
  ```
  tfx run terminate --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
  ```
-
-
