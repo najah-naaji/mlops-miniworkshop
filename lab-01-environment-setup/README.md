@@ -35,6 +35,8 @@ In addition to the [services enabled by default](https://cloud.google.com/servic
 
 Use [GCP Console](https://console.cloud.google.com/) or `gcloud` command line interface in [Cloud Shell](https://cloud.google.com/shell/docs/) to [enable the required services](https://cloud.google.com/service-usage/docs/enable-disable) . 
 
+## In [Cloud Shell](https://cloud.google.com/shell/docs/)
+
 To enable the required services using `gcloud`:
 1. Start GCP [Cloud Shell](https://cloud.google.com/shell/docs/)
 
@@ -124,8 +126,7 @@ Provisioning of the underlying infrastructure (GKE, service accounts, etc) and i
 
 To provision KFP environment
 
-1. Open **Cloud Shell**
-2. Clone this repo under the `home` folder.
+1. Clone this repo under the `home` folder.
 ```
 cd /
 git clone https://github.com/jarokaz/mlops-miniworkshop.git

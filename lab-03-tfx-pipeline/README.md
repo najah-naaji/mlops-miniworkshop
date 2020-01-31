@@ -32,6 +32,15 @@ The `Transform` and `Train` components are configured to retrieve the module fil
 
 All code executes in containers on the GKE cluster.
 
+## In AI Platform Notebooks Terminal
+
+Clone the exercise files under your home directory.
+
+```
+cd
+git clone https://github.com/jarokaz/mlops-miniworkshop.git
+cd mlops-miniworkshop/lab-01-environment-setup
+```
 
 ### Building and deploying the pipeline
 
