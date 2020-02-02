@@ -48,12 +48,15 @@ export NAMESPACE=kubeflow
 export REGION=us-central1
 export ZONE=us-central1-a
 
+gcloud config set project $PROJECT_ID
+
+gcloud services enable compute.googleapis.com
+
 gcloud compute project-info add-metadata --metadata \
 google-compute-default-region=$REGION
 gcloud compute project-info add-metadata --metadata \
 google-compute-default-zone=$ZONE
 
-gcloud config set project $PROJECT_ID
 gcloud services enable \
 cloudbuild.googleapis.com \
 container.googleapis.com \
@@ -61,7 +64,7 @@ cloudresourcemanager.googleapis.com \
 iam.googleapis.com \
 containerregistry.googleapis.com \
 containeranalysis.googleapis.com \
-ml.googleapis.com 
+ml.googleapis.com
 ```
 
 3. After the services are enabled, [grant the Cloud Build service account the Project Editor role](https://cloud.google.com/cloud-build/docs/securing-builds/set-service-account-permissions).
