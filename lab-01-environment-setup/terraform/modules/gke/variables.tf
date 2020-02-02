@@ -25,6 +25,6 @@ variable "node_count" {
 
 variable "node_type" {
     description = "The cluster's node type"
-    default     = "n1-highcpu-96"
+    default     = "n1-highcpu-16"
 }
 
