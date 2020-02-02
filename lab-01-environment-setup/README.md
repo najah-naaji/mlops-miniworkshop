@@ -78,16 +78,14 @@ The image is a derivative of the standard TensorFlow 2.0  [AI Deep Learning Cont
 
 ### Creating the custom image's Dockerfile:
 
-1. Start GCP [Cloud Shell](https://cloud.google.com/shell/docs/)
-
-2. Create a working folder in your `home` directory
+1. Create a working folder in your `home` directory
 ```
 cd
 mkdir lab-setup
 cd lab-setup
 ```
 
-3. Create Dockerfile 
+2. Create Dockerfile 
 ```
 cat > Dockerfile << EOF
 FROM gcr.io/deeplearning-platform-release/tf2-cpu.2-0:m39
