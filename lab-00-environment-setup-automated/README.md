@@ -36,7 +36,7 @@ cd mlops-miniworkshop/lab-01-environment-setup
 ```
 By default, the script uses the [PROJECT_ID]-[RESOURCE-NAME] format to name the provisioned resources. For example, if your project's ID was `mlops-workshop` the script would provision the resources with the following names:
 - `mlops-workshop-notebook` - The AI Platform Notebook instance
-- `mlops-workshop-cluster` - GKE to host KFP services
+- `mlops-workshop-cluster` - The GKE cluster to host KFP services
 - `mlops-artifact-store` - The GCS bucket for artifact storage.
 
 If you want to use a different prefix than the project ID, provide it a second parameter to the `install.sh` script.
