@@ -131,7 +131,8 @@ if __name__ == '__main__':
    
   # Beam settings.
   _beam_pipeline_args = [
-    '--runner=DirectRunner'
+    '--runner=DirectRunner',
+    '--direct_num_workers=6'
   ]
 
   # ML Metadata settings for the MySQL deployment on GKE. 

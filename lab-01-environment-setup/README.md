@@ -35,6 +35,8 @@ In addition to the [services enabled by default](https://cloud.google.com/servic
 
 Use [GCP Console](https://console.cloud.google.com/) or `gcloud` command line interface in [Cloud Shell](https://cloud.google.com/shell/docs/) to [enable the required services](https://cloud.google.com/service-usage/docs/enable-disable) . 
 
+## In [Cloud Shell](https://cloud.google.com/shell/docs/)
+
 To enable the required services using `gcloud`:
 1. Start GCP [Cloud Shell](https://cloud.google.com/shell/docs/)
 
@@ -46,12 +48,15 @@ export NAMESPACE=kubeflow
 export REGION=us-central1
 export ZONE=us-central1-a
 
+gcloud config set project $PROJECT_ID
+
+gcloud services enable compute.googleapis.com
+
 gcloud compute project-info add-metadata --metadata \
 google-compute-default-region=$REGION
 gcloud compute project-info add-metadata --metadata \
 google-compute-default-zone=$ZONE
 
-gcloud config set project $PROJECT_ID
 gcloud services enable \
 cloudbuild.googleapis.com \
 container.googleapis.com \
@@ -59,7 +64,7 @@ cloudresourcemanager.googleapis.com \
 iam.googleapis.com \
 containerregistry.googleapis.com \
 containeranalysis.googleapis.com \
-ml.googleapis.com 
+ml.googleapis.com
 ```
 
 3. After the services are enabled, [grant the Cloud Build service account the Project Editor role](https://cloud.google.com/cloud-build/docs/securing-builds/set-service-account-permissions).
@@ -73,16 +78,14 @@ The image is a derivative of the standard TensorFlow 2.0  [AI Deep Learning Cont
 
 ### Creating the custom image's Dockerfile:
 
-1. Start GCP [Cloud Shell](https://cloud.google.com/shell/docs/)
-
-2. Create a working folder in your `home` directory
+1. Create a working folder in your `home` directory
 ```
 cd
 mkdir lab-setup
 cd lab-setup
 ```
 
-3. Create Dockerfile 
+2. Create Dockerfile 
 ```
 cat > Dockerfile << EOF
 FROM gcr.io/deeplearning-platform-release/tf2-cpu.2-0:m39
@@ -124,8 +127,7 @@ Provisioning of the underlying infrastructure (GKE, service accounts, etc) and i
 
 To provision KFP environment
 
-1. Open **Cloud Shell**
-2. Clone this repo under the `home` folder.
+1. Clone this repo under the `home` folder.
 ```
 cd /
 git clone https://github.com/jarokaz/mlops-miniworkshop.git

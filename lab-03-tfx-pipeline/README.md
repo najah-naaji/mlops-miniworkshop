@@ -32,6 +32,15 @@ The `Transform` and `Train` components are configured to retrieve the module fil
 
 All code executes in containers on the GKE cluster.
 
+## In AI Platform Notebooks Terminal
+
+Clone the exercise files under your home directory.
+
+```
+cd
+git clone https://github.com/jarokaz/mlops-miniworkshop.git
+cd mlops-miniworkshop/lab-01-environment-setup
+```
 
 ### Building and deploying the pipeline
 
@@ -56,7 +65,7 @@ Where
 
 Upload the module file into the GCS location:
 ```
-cd /home/mlops-miniworkshop/lab-03-tfx-pipeline
+cd ~/mlops-miniworkshop/lab-03-tfx-pipeline
 export MODULE_FILE_URI=${ARTIFACT_STORE_URI}/modules/transform_train.py
 gsutil cp transform_train.py $MODULE_FILE_URI
 ```
@@ -64,7 +73,7 @@ gsutil cp transform_train.py $MODULE_FILE_URI
 Compile the pipeline.
 
 ```
-export PIPELINE_NAME=tfx_covertype_classifier_training
+export PIPELINE_NAME=tfx-covertype-$(date +%s)
 export TRAINED_MODEL_URI=${ARTIFACT_STORE_URI}/trained_models/$PIPELINE_NAME
 export DATA_ROOT_URI=gs://workshop-datasets/covertype/full
 export TFX_IMAGE_URI=tensorflow/tfx:0.15.0
@@ -107,5 +116,3 @@ Where
  ```
  tfx run terminate --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
  ```
-
-
