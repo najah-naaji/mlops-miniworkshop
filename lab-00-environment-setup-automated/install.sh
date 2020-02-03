@@ -64,8 +64,6 @@ ml.googleapis.com
 
 echo INFO: Required services enabled
 
-
-
 # Provision an AI Platform Notebook instance
 
 INSTANCE_NAME=${NAME_PREFIX}-notebook
