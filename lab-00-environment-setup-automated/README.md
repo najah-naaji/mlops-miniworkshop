@@ -16,7 +16,7 @@ In the lab environment, all services are provisioned in the same [Google Cloud P
 
 
 ## Provisioning the lab environment
-Before proceeding make sure that you have access to a GCP project. Your account must the project's **Owner** role.
+Before proceeding make sure that you have access to a GCP project. Your account must be the project's **Owner**.
 
 Although you can run the below commands from any workstation configured with *Google Cloud SDK*, the following instructions have been tested on GCP [Cloud Shell](https://cloud.google.com/shell/).
 
