@@ -18,7 +18,7 @@ In the lab environment, all services are provisioned in the same [Google Cloud P
 ## Provisioning the lab environment
 Before proceeding make sure that you have access to a GCP project. Your account must be the project's **Owner**.
 
-Although you can run the below commands from any workstation configured with *Google Cloud SDK*, the following instructions have been tested on GCP [Cloud Shell](https://cloud.google.com/shell/).
+You will run the setup script from [Cloud Shell](https://cloud.google.com/shell/).
 
 To provision the lab environment
 
@@ -39,11 +39,9 @@ By default, the script uses the [PROJECT_ID]-[RESOURCE-NAME] format to name the 
 - `mlops-workshop-cluster` - The GKE cluster to host KFP services
 - `mlops-artifact-store` - The GCS bucket for artifact storage.
 
-If you want to use a different prefix than the project ID, provide it a second parameter to the `install.sh` script.
+If you want to use a different prefix than the project ID, provide it as the second parameter to the `install.sh` script.
 
-By default, all zone scoped resource (e.g. AI Platform Notebook instance and GKE cluster) are provisioned in the `us-central1-a` zone.
-
-Although not recommened, you can deploy the zone scoped resources to a different zone by providing the zone's name as the third parameter to the `install.sh` script.
+By default, all zonal resources are provisioned in the `us-central1-a` zone. Although not recommened, you can use another zone by providing the zone's name as the third parameter to the `install.sh` script.
 
 By default, the KFP services are deployed into the `kubeflow` namespace on the GKE cluster. Currently, you cannot change the namespace name.
 
