@@ -72,8 +72,6 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member serviceAccount:$CLOUD_BUILD_SERVICE_ACCOUNT \
   --role roles/editor
 
-exit 0
-
 # Provision an AI Platform Notebook instance
 
 INSTANCE_NAME=${NAME_PREFIX}-notebook
