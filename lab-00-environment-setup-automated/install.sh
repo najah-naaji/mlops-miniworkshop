@@ -66,7 +66,7 @@ echo INFO: Required services enabled
 
 # Give Cloud Build service account the project editor role
 echo INFO:Assigning the Cloud Build service account to the project editor role
-PROJECT_NUMBER = $(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
+PROJECT_NUMBER=$(gcloud projects describe $PROJECT_ID --format="value(projectNumber)")
 gcloud projects add-iam-policy-binding $PROJECT_ID \
   --member ${PROJECT_NUMBER)@mcloudbuild.iam.gserviceaccount.com \
   --role roles/editor
