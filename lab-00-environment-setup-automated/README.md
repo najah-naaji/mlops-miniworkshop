@@ -15,7 +15,7 @@ The core services in the environment are:
 In the lab environment, all services are provisioned in the same [Google Cloud Project](https://cloud.google.com/storage/docs/projects). 
 
 
-## Provisioning a lab environment
+## Provisioning the lab environment
 Before proceeding make sure that you have access to a GCP project. Your account must the project's **Owner** role.
 
 Although you can run the below commands from any workstation configured with *Google Cloud SDK*, the following instructions have been tested on GCP [Cloud Shell](https://cloud.google.com/shell/).
