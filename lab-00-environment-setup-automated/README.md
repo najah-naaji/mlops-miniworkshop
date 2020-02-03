@@ -6,7 +6,7 @@ The labs in this repo are designed to run in a simplified MLOps environment.
 
 The core services in the environment are:
 - **AI Platform Notebooks** - your development experimentation environment
-- **Cloud Storage** - a GCS bucket for pipeline artifacts
+- **Cloud Storage** - a GCS bucket for managing ML artifacts
 - **Kubeflow Pipelines** - a lightweight deployment of Kubeflow Pipelines on GKE hosting ML Pipelines and ML Metadata services. GKE will also be used as a primary execution environment for KFP and TFX components.
 - **Cloud Build** - CI/CD
 - **Container Registry** - a registry for container images encapsulating pipeline components
