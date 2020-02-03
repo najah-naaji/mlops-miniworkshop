@@ -27,7 +27,7 @@ To provision the lab environment
 ```
 cd /
 git clone https://github.com/jarokaz/mlops-miniworkshop.git
-cd mlops-miniworkshop/lab-01-environment-setup
+cd mlops-miniworkshop/lab-00-environment-setup-automated
 ```
 
 3. Start installation
