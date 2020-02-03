@@ -64,9 +64,7 @@ ml.googleapis.com
 
 echo INFO: Required services enabled
 
-# Build AI Platform Notebook image
-echo INFO: Building AI Platform Notebooks container image: $IMAGE_URI
-gcloud builds submit --timeout 15m --tag ${IMAGE_URI} .
+
 
 # Provision an AI Platform Notebook instance
 
@@ -75,8 +73,12 @@ INSTANCE_NAME=${NAME_PREFIX}-notebook
 if [ $(gcloud compute instances list --filter="name=$INSTANCE_NAME" --zones $ZONE --format="value(name)") ]; then
     echo INFO: Instance $INSTANCE_NAME exists in $ZONE. Skipping provisioning
 else
+    # Build the AI Platform Notebook image
+    echo INFO: Building AI Platform Notebooks container image: $IMAGE_URI
+    gcloud builds submit --timeout 15m --tag ${IMAGE_URI} .
+    
+    # Provision the AI Platform Notebook instance
     echo INFO: Starting provisioning of $INSTANCE_NAME in $ZONE
-
     gcloud compute instances create $INSTANCE_NAME \
     --zone=$ZONE \
     --image-family=$IMAGE_FAMILY \
