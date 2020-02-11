@@ -39,7 +39,7 @@ NAME_PREFIX=${2:-$PROJECT_ID}
 ZONE=${4:-us-central1-a}
 
 IMAGE_NAME=mlops-labs-image
-TAG=TF115-TFX015-KFP136
+TAG=latest
 IMAGE_URI="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${TAG}"
 
 INSTANCE_NAME=${NAME_PREFIX}-notebook
