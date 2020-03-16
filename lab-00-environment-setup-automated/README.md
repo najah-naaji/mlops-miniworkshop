@@ -25,7 +25,7 @@ To provision the lab environment
 1. Open **Cloud Shell**
 2. Clone this repo under the `home` folder.
 ```
-cd /
+cd ~
 git clone https://github.com/jarokaz/mlops-miniworkshop.git
 cd mlops-miniworkshop/lab-00-environment-setup-automated
 ```
