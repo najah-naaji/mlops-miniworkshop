@@ -53,7 +53,7 @@ By default, the KFP services are deployed into the `kubeflow` namespace on the G
 After the installation completes, you can access the KFP UI from the following URL. You may need to wait a few minutes before the URL is operational.
 
 ```
-gcloud container clusters get-credentials $PREFIX-cluster --zone $ZONE
+gcloud container clusters get-credentials $PROJECT_ID-cluster --zone $ZONE
 echo "https://"$(kubectl describe configmap inverse-proxy-config -n kubeflow | \
 grep "googleusercontent.com")
 ```
