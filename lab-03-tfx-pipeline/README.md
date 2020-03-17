@@ -81,11 +81,13 @@ export TFX_IMAGE_URI=tensorflow/tfx:0.15.0
 tfx pipeline create --engine kubeflow --pipeline_path pipeline_dsl.py --endpoint $KFP_INVERSE_PROXY_HOST
 ```
 
+**Output from pipeline create command:**............. 'url': None}
+Pipeline "tfx-covertype-1584420696" created successfully.
 
-The `tfx pipeline create` command compiled the pipeline's DSL into the KFP package file - `tfx_covertype_classifier_training.tar.gz`. The package file contains the description of the pipeline in the YAML format. If you want to examine the file, extract from the tarball file and use the JupyterLab editor.
+The `tfx pipeline create` command compiled the pipeline's DSL into the KFP package file - `tfx-covertype-1584420696.tar.gz`. The package file contains the description of the pipeline in the YAML format. If you want to examine the file, extract from the tarball file and use the JupyterLab editor.
 
 ```
-tar xvf tfx_covertype_classifier_training.tar.gz
+tar xvf tfx-covertype-1584420696.tar.gz
 ```
 
 The name of the extracted file is `pipeline.yaml`.
@@ -98,8 +100,6 @@ To submit the pipeline run using **TFX CLI** and copy the **pipeline-name from t
 ```
 tfx run create --pipeline_name $PIPELINE_NAME --endpoint $KFP_INVERSE_PROXY_HOST
 ```
-............. 'url': None}
-Pipeline "tfx-covertype-1584420696" created successfully.
 
 To list all the active runs of the pipeline:
 ```
