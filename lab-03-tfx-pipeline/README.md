@@ -94,19 +94,21 @@ The name of the extracted file is `pipeline.yaml`.
 
 After the pipeline has been deployed, you can trigger and monitor pipeline runs using **TFX CLI** or **KFP UI**.
 
-To submit the pipeline run using **TFX CLI**:
+To submit the pipeline run using **TFX CLI** and copy the **pipeline-name from the output e.g "tfx-covertype-1584420696" **:
 ```
 tfx run create --pipeline_name $PIPELINE_NAME --endpoint $KFP_INVERSE_PROXY_HOST
 ```
+............. 'url': None}
+Pipeline "tfx-covertype-1584420696" created successfully.
 
 To list all the active runs of the pipeline:
 ```
 tfx run list --pipeline_name $PIPELINE_NAME --endpoint $KFP_INVERSE_PROXY_HOST
 ```
 
-To retrieve the status of a given run:
+To retrieve the status of a given run (**Please update the pipeline_name with the newly create pipeline**):
 ```
-tfx run status --pipeline_name tfx_covertype_classifier_training --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
+tfx run status --pipeline_name tfx-covertype-1584420696 --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
 ```
 
 Where
