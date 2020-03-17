@@ -119,7 +119,7 @@ Where
  tfx run terminate --run_id [YOUR_RUN_ID] --endpoint $KFP_INVERSE_PROXY_HOST
  ```
 
-## Accessing KFP UI
+## Accessing KFP UI:
 
 After the installation completes, you can access the KFP UI from the following URL. You may need to wait a few minutes before the URL is operational.
 
@@ -129,7 +129,7 @@ echo "https://"$(kubectl describe configmap inverse-proxy-config -n kubeflow | \
 grep "googleusercontent.com")
 ```
 
-## Accessing KFP UI
+## Exploring KFP Pipeline from UI:
 
 After accessing the KFP UI from the following URL. Please spend some time in the following tabs:
 
