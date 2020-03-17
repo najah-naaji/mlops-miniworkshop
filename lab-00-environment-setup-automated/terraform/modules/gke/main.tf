@@ -1,6 +1,6 @@
 # Create a GKE cluster 
 
-resource "google_container_cluster" "gke_cluster" {
+resource "google_container_cluster" "gke-cluster" {
   name               = var.name
   location           = var.location
   description        = var.description   
