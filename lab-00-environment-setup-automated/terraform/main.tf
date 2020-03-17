@@ -15,7 +15,7 @@ provider "google" {
 # Create the GKE service account 
 module "gke_service_account" {
   source                       = "./modules/service_account"
-  service_account_id           = "${var.name_prefix}-gke-sa"
+  service_account_id           = "kubeflow-lab-gke-sa"
   service_account_display_name = "The GKE service account"
   service_account_roles        = var.gke_service_account_roles
 }
@@ -23,7 +23,7 @@ module "gke_service_account" {
 # Create the KFP service account 
 module "kfp_service_account" {
   source                       = "./modules/service_account"
-  service_account_id           = "${var.name_prefix}-sa"
+  service_account_id           = "kubeflow-lab-sa"
   service_account_display_name = "The KFP service account"
   service_account_roles        = var.kfp_service_account_roles
 }
