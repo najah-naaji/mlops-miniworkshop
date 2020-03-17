@@ -42,7 +42,7 @@ IMAGE_NAME=mlops-labs-image
 TAG=latest
 IMAGE_URI="gcr.io/${PROJECT_ID}/${IMAGE_NAME}:${TAG}"
 
-INSTANCE_NAME=${NAME_PREFIX}-notebook
+INSTANCE_NAME=kubeflow-lab-notebook
 IMAGE_FAMILY="common-container"
 IMAGE_PROJECT="deeplearning-platform-release"
 INSTANCE_TYPE="n1-standard-4"
@@ -74,7 +74,7 @@ gcloud projects add-iam-policy-binding $PROJECT_ID \
 
 # Provision an AI Platform Notebook instance
 
-INSTANCE_NAME=${NAME_PREFIX}-notebook
+INSTANCE_NAME=kubeflow-lab-notebook
 
 if [ $(gcloud compute instances list --filter="name=$INSTANCE_NAME" --zones $ZONE --format="value(name)") ]; then
     echo INFO: Instance $INSTANCE_NAME exists in $ZONE. Skipping provisioning
